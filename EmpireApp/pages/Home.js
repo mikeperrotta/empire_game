@@ -1,5 +1,3 @@
-// Home.js
-
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Image, ImageBackground, Button, TouchableHighlight } from 'react-native';
 
