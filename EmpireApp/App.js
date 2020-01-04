@@ -12,6 +12,7 @@ const MainNavigator = createStackNavigator({
   HomeScreen: { screen: Home },
 }, {
   initialRouteName: 'HomeScreen',
+  headerMode: 'none',
 }
 );
 
