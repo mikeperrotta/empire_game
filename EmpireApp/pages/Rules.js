@@ -43,7 +43,7 @@ export class Rules extends Component {
       <View style={styles.container}>
         <View style={styles.headerContainer}>
           <TouchableHighlight
-              onPress={() => this.navigate('HomeScreen')}
+              onPress={() => this.props.navigation.goBack()}
               underlayColor={Colors.WHITE}>
             <Image source={require('../assets/backArrow.png')} />
           </TouchableHighlight>
