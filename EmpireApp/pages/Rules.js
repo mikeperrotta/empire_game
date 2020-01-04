@@ -9,8 +9,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerContainer: {
-    marginTop: 40,
+    alignItems: 'center',
+    flexDirection: 'row',
     marginLeft: 26,
+    marginTop: 40,
   },
   titleText: {
     marginVertical: 30,
