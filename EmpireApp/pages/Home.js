@@ -60,7 +60,7 @@ export class Home extends Component {
             </TouchableHighlight>
             <TouchableHighlight
                 activeOpacity={1}
-                onPress={() => this.navigate('HomeScreen')}
+                onPress={() => this.navigate('RulesScreen')}
                 style={styles.button}
                 underlayColor={Colors.DARK_BLUE}>
               <Text style={styles.text}> Rules </Text>
