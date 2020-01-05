@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, TouchableHighlight } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { Colors } from '../core/styles/Colors';
 import QUESTIONS from '../assets/Questions';
@@ -31,10 +32,11 @@ const styles = StyleSheet.create({
     marginVertical: 30,
   },
   questionPicker: {
-    height: 262,
+    height: 270,
   },
   question: {
     alignItems: 'center',
+    height: 55,
   },
   questionText: {
     textAlign: 'left',
@@ -48,8 +50,15 @@ const styles = StyleSheet.create({
     width: 160,
   },
   questionPickerMargins: {
-    height: 90,
-  }
+    height: 110,
+  },
+  linearGradient: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
 });
 
 function QuestionObject({ index, question }) {
@@ -83,6 +92,7 @@ function QuestionObject({ index, question }) {
 }
 
 export class GameSetup extends Component {
+
   navigate = (toScreen) => {
     const { navigation } = this.props;
     navigation.navigate(toScreen)
@@ -113,9 +123,15 @@ export class GameSetup extends Component {
           <FlatList
               data={QUESTIONS}
               keyExtractor={question => question.question}
+              snapToInterval={55}
               renderItem={({ item, index }) => <QuestionObject index={index} question={item.question} />}
               showsVerticalScrollIndicator={false}
               style={styles.questionPicker}
+          />
+          <LinearGradient
+              colors={['#ffffffc0', '#ffffff00', '#ffffffc0']}
+              pointerEvents='none'
+              style={styles.linearGradient}
           />
         </View>
       </View>
