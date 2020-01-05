@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, TouchableHighlight } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableHighlight } from 'react-native';
 
 import { Colors } from '../core/styles/Colors';
+import QUESTIONS from '../assets/Questions';
 
 const styles = StyleSheet.create({
   container: {
@@ -28,6 +29,23 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginHorizontal: 64,
     marginVertical: 30,
+  },
+  questionPicker: {
+    height: 262,
+  },
+  question: {
+    alignItems: 'center',
+  },
+  questionText: {
+    textAlign: 'left',
+    width: 192,
+    fontSize: 14,
+    marginVertical: 10,
+  },
+  horizontalRule: {
+    borderBottomColor: Colors.BOLD_BLUE,
+    borderBottomWidth: 1,
+    width: 160,
   },
 });
 
@@ -58,6 +76,27 @@ export class GameSetup extends Component {
         <Text style={styles.explanationText}>
           Pick a question. Each player will answer this question.
         </Text>
+        <View style={styles.questionPickerWrapper}>
+          <ScrollView
+              showsVerticalScrollIndicator={false}
+              style={styles.questionPicker}>
+            {
+              QUESTIONS.map((question) => (
+                <View
+                    key={question.question}
+                    style={styles.question}>
+                  <Text
+                      style={[styles.explanationText, styles.questionText]}>
+                    {question.question}
+                  </Text>
+                  <View
+                      style={styles.horizontalRule}
+                  />
+                </View>
+              ))
+            }
+          </ScrollView>
+        </View>
       </View>
     );
   }
