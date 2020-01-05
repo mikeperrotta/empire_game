@@ -129,7 +129,7 @@ export class GameSetup extends Component {
               style={styles.questionPicker}
           />
           <LinearGradient
-              colors={['#ffffffc0', '#ffffff00', '#ffffffc0']}
+              colors={[Colors.WHITE_HALF_TRANSPARENT, Colors.WHITE_TRANSPARENT, Colors.WHITE_HALF_TRANSPARENT]}
               pointerEvents='none'
               style={styles.linearGradient}
           />
