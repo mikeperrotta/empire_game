@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, TouchableHighlight } from 'react-native';
+import { View, Text, StyleSheet, Image, FlatList, TouchableHighlight } from 'react-native';
 
 import { Colors } from '../core/styles/Colors';
 import QUESTIONS from '../assets/Questions';
@@ -47,7 +47,40 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     width: 160,
   },
+  questionPickerMargins: {
+    height: 90,
+  }
 });
+
+function QuestionObject({ index, question }) {
+  return (
+    <>
+      {
+        index === 0 && (
+          <View style={styles.questionPickerMargins} />
+        )
+      }
+      <View
+          style={styles.question}>
+        <Text
+            style={[styles.explanationText, styles.questionText]}>
+          {question}
+        </Text>
+        {index < QUESTIONS.length - 1 && (
+            <View
+                style={styles.horizontalRule}
+            />
+          )
+        }
+      </View>
+      {
+        index === QUESTIONS.length - 1 && (
+          <View style={styles.questionPickerMargins} />
+        )
+      }
+    </>
+  );
+}
 
 export class GameSetup extends Component {
   navigate = (toScreen) => {
@@ -76,26 +109,14 @@ export class GameSetup extends Component {
         <Text style={styles.explanationText}>
           Pick a question. Each player will answer this question.
         </Text>
-        <View style={styles.questionPickerWrapper}>
-          <ScrollView
+        <View>
+          <FlatList
+              data={QUESTIONS}
+              keyExtractor={question => question.question}
+              renderItem={({ item, index }) => <QuestionObject index={index} question={item.question} />}
               showsVerticalScrollIndicator={false}
-              style={styles.questionPicker}>
-            {
-              QUESTIONS.map((question) => (
-                <View
-                    key={question.question}
-                    style={styles.question}>
-                  <Text
-                      style={[styles.explanationText, styles.questionText]}>
-                    {question.question}
-                  </Text>
-                  <View
-                      style={styles.horizontalRule}
-                  />
-                </View>
-              ))
-            }
-          </ScrollView>
+              style={styles.questionPicker}
+          />
         </View>
       </View>
     );
