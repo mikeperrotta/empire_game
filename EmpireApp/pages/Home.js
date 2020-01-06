@@ -27,6 +27,8 @@ const styles = StyleSheet.create({
     margin: 60,
   },
   logoImage: {
+    height: 216,
+    width: 216,
   },
   text: {
     color: Colors.WHITE_TEXT,
@@ -49,7 +51,7 @@ export class Home extends Component {
         <View style={styles.container}>
           <Image
               style={styles.logoImage}
-              source={require('../assets/logo.png')} />
+              source={require('../assets/logo2x.png')} />
           <View style={styles.buttonContainer}>
             <TouchableHighlight
                 activeOpacity={1}

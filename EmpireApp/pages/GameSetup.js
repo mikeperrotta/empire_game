@@ -110,7 +110,10 @@ export class GameSetup extends Component {
           <TouchableHighlight
               onPress={() => this.navigate('RulesScreen')}
               underlayColor={Colors.WHITE}>
-            <Image source={require('../assets/questionMark.png')} />
+            <Image
+                style={{height: 50, width: 47}}
+                source={require('../assets/questionMark2x.png')}
+            />
           </TouchableHighlight>
         </View>
         <Text style={styles.titleText}>
