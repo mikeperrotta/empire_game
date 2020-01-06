@@ -53,7 +53,7 @@ export class Home extends Component {
           <View style={styles.buttonContainer}>
             <TouchableHighlight
                 activeOpacity={1}
-                onPress={() => this.navigate('GameSetupScreen')}
+                onPress={() => this.navigate('NumberPlayersScreen')}
                 style={styles.button}
                 underlayColor={Colors.DARK_BLUE}>
               <Text style={styles.text}> Play </Text>
