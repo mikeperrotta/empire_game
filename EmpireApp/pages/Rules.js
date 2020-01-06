@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   titleText: {
-    marginVertical: 30,
+    marginVertical: 22,
     marginHorizontal: 32,
     fontFamily: 'Georgia',
     color: Colors.BOLD_BLUE,

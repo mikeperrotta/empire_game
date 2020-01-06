@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
     color: Colors.BOLD_BLUE,
     fontSize: 18,
     marginHorizontal: 64,
-    marginVertical: 30,
   },
   questionPicker: {
     height: 270,
@@ -161,7 +160,13 @@ export class GameSetup extends Component {
               style={styles.questionPicker}
           />
           <LinearGradient
-              colors={[Colors.WHITE_HALF_TRANSPARENT, Colors.WHITE_TRANSPARENT, Colors.WHITE_HALF_TRANSPARENT]}
+              colors={[
+                Colors.WHITE_HALF_TRANSPARENT,
+                Colors.WHITE_THREE_QUARTER_TRANSPARENT,
+                Colors.WHITE_TRANSPARENT,
+                Colors.WHITE_THREE_QUARTER_TRANSPARENT,
+                Colors.WHITE_HALF_TRANSPARENT
+              ]}
               pointerEvents='none'
               style={styles.linearGradient}
           />
