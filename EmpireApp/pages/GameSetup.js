@@ -59,6 +59,26 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
   },
+  next: {
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 0,
+  },
+  button: {
+    alignItems: 'center',
+    backgroundColor: Colors.BOLD_BLUE,
+    borderRadius: 5,
+    height: 48,
+    justifyContent: 'center',
+    marginHorizontal: 20,
+    marginVertical: 30,
+    padding: 10,
+    width: 328,
+  },
+  buttonArrow: {
+    height: 20,
+    width: 20,
+  },
 });
 
 function QuestionObject({ index, question }) {
@@ -136,6 +156,18 @@ export class GameSetup extends Component {
               pointerEvents='none'
               style={styles.linearGradient}
           />
+        </View>
+        <View style={styles.next}>
+          <TouchableHighlight
+              activeOpacity={1}
+              onPress={() => this.navigate('RulesScreen')}
+              style={styles.button}
+              underlayColor={Colors.DARK_BLUE}>
+            <Image
+                source={require('../assets/nextArrow.png')}
+                style={styles.buttonArrow}
+            />
+          </TouchableHighlight>
         </View>
       </View>
     );
