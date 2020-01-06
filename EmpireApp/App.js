@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Rules from './pages/Rules';
 import GameSetup from './pages/GameSetup'
 import NumberPlayers from './pages/NumberPlayers'
+import NumberFakes from './pages/NumberFakes'
 
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
@@ -13,6 +14,7 @@ const MainNavigator = createStackNavigator({
   RulesScreen: { screen: Rules },
   GameSetupScreen: { screen: GameSetup },
   NumberPlayersScreen: {screen: NumberPlayers },
+  NumberFakesScreen: {screen: NumberFakes },
 }, {
   initialRouteName: 'HomeScreen',
   headerMode: 'none',

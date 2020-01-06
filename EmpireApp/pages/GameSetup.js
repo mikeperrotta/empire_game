@@ -174,7 +174,7 @@ export class GameSetup extends Component {
         <View style={styles.sectionView}>
           <TouchableHighlight
               activeOpacity={1}
-              onPress={() => this.navigate('RulesScreen')}
+              onPress={() => this.navigate('NumberFakesScreen')}
               style={styles.button}
               underlayColor={Colors.DARK_BLUE}>
             <Image
