@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, ScrollView, View, Text, TouchableHighlight, Image } from 'react-native';
+import { StyleSheet, ScrollView, View, TextInput, Text, TouchableHighlight, Image } from 'react-native';
 
 import { Colors } from '../core/styles/Colors';
 
@@ -93,6 +93,9 @@ const styles = StyleSheet.create({
   },
 });
 
+const minNumberPlayers = 2;
+const maxNumberPlayers = 99;
+
 export class NumberPlayers extends Component {
 
   constructor (props) {
@@ -109,10 +112,22 @@ export class NumberPlayers extends Component {
 
   adjustNumberPlayers = (increase) => {
     let { numberPlayers } = this.state;
-    numberPlayers += increase? 1 : -1;
-    numberPlayers = numberPlayers < 2 ? 2 : numberPlayers;
-    numberPlayers = numberPlayers > 99 ? 99 : numberPlayers;
+    numberPlayers += increase ? 1 : -1;
+    numberPlayers = numberPlayers < minNumberPlayers ? minNumberPlayers : numberPlayers;
+    numberPlayers = numberPlayers > maxNumberPlayers ? maxNumberPlayers : numberPlayers;
     this.setState({numberPlayers: numberPlayers})
+  }
+
+  onChangedNumPlayersText = (event) => {
+    let text = event.nativeEvent.text;
+    let newNumberPlayers = parseInt(text, 10);
+    if (isNaN(newNumberPlayers)) {
+      // TODO: don't use this hack...
+      newNumberPlayers = this.state.numberPlayers + 1;
+    }
+    newNumberPlayers = newNumberPlayers < minNumberPlayers ? minNumberPlayers : newNumberPlayers;
+    newNumberPlayers = newNumberPlayers > maxNumberPlayers ? maxNumberPlayers : newNumberPlayers;
+    this.setState({numberPlayers: newNumberPlayers});
   }
 
   render() {
@@ -155,9 +170,17 @@ export class NumberPlayers extends Component {
               />
             </TouchableHighlight>
             <View style={styles.rockerButtonTextArea}>
-              <Text style={styles.rockerButtonText}>
+              <TextInput
+                  clearTextOnFocus={true}
+                  keyboardType={'number-pad'}
+                  maxLength={2}
+                  onEndEditing={this.onChangedNumPlayersText}
+                  returnKeyType='done'
+                  style={styles.rockerButtonText}
+                  value={this.state.NumberPlayers}
+              >
                 {this.state.numberPlayers}
-              </Text>
+              </TextInput>
             </View>
               <TouchableHighlight
                   activeOpacity={1}
