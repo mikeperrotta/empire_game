@@ -17,8 +17,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   titleText: {
-    marginVertical: 30,
-    marginHorizontal: 32,
+    marginVertical: 10,
     fontFamily: 'Georgia',
     color: Colors.BOLD_BLUE,
     fontSize: 32,
@@ -45,8 +44,7 @@ const styles = StyleSheet.create({
     height: 48,
     justifyContent: 'center',
     marginHorizontal: 20,
-    marginVertical: 30,
-    padding: 10,
+    marginVertical: 24,
     width: 328,
   },
   rockerButton: {
@@ -165,7 +163,7 @@ export class NumberPlayers extends Component {
         <View style={styles.sectionView}>
           <TouchableHighlight
               activeOpacity={1}
-              onPress={() => this.navigate('RulesScreen')}
+              onPress={() => this.navigate('GameSetupScreen')}
               style={styles.button}
               underlayColor={Colors.DARK_BLUE}>
             <Image

@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.WHITE,
     flex: 1,
+    justifyContent: 'space-between',
   },
   headerContainer: {
     alignItems: 'center',
@@ -17,7 +18,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 26,
     marginTop: 40,
   },
+  sectionView: {
+    alignItems: 'center',
+  },
   titleText: {
+    marginVertical: 10,
     textAlign: 'center',
     fontFamily: 'Georgia',
     color: Colors.BOLD_BLUE,
@@ -71,8 +76,8 @@ const styles = StyleSheet.create({
     height: 48,
     justifyContent: 'center',
     marginHorizontal: 20,
-    marginVertical: 30,
-    padding: 10,
+    marginBottom: 24,
+    marginTop: 12,
     width: 328,
   },
   buttonArrow: {
@@ -121,28 +126,32 @@ export class GameSetup extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.headerContainer}>
-          <TouchableHighlight
-              onPress={() => this.navigate('HomeScreen')}
-              underlayColor={Colors.WHITE}>
-            <Image source={require('../assets/backArrow.png')} />
-          </TouchableHighlight>
-          <TouchableHighlight
-              onPress={() => this.navigate('RulesScreen')}
-              underlayColor={Colors.WHITE}>
-            <Image
-                style={{height: 50, width: 47}}
-                source={require('../assets/questionMark2x.png')}
-            />
-          </TouchableHighlight>
-        </View>
-        <Text style={styles.titleText}>
-          Game Setup
-        </Text>
-        <Text style={styles.explanationText}>
-          Pick a question. Each player will answer this question.
-        </Text>
         <View>
+          <View style={styles.headerContainer}>
+            <TouchableHighlight
+                onPress={() => this.props.navigation.goBack()}
+                underlayColor={Colors.WHITE}>
+              <Image source={require('../assets/backArrow.png')} />
+            </TouchableHighlight>
+            <TouchableHighlight
+                onPress={() => this.navigate('RulesScreen')}
+                underlayColor={Colors.WHITE}>
+              <Image
+                  style={{height: 50, width: 47}}
+                  source={require('../assets/questionMark2x.png')}
+              />
+            </TouchableHighlight>
+          </View>
+          <Text style={styles.titleText}>
+            Game Setup
+          </Text>
+        </View>
+        <View style={styles.sectionView}>
+          <Text style={styles.explanationText}>
+            Pick a question. Each player will answer this question.
+          </Text>
+        </View>
+        <View style={styles.sectionView}>
           <FlatList
               data={QUESTIONS}
               keyExtractor={question => question.question}
@@ -157,7 +166,7 @@ export class GameSetup extends Component {
               style={styles.linearGradient}
           />
         </View>
-        <View style={styles.next}>
+        <View style={styles.sectionView}>
           <TouchableHighlight
               activeOpacity={1}
               onPress={() => this.navigate('RulesScreen')}
