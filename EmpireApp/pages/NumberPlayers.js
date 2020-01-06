@@ -94,9 +94,25 @@ const styles = StyleSheet.create({
 });
 
 export class NumberPlayers extends Component {
+
+  constructor (props) {
+    super(props)
+    this.state = {
+      numberPlayers: 5
+    }
+  }
+
   navigate = (toScreen) => {
     const { navigation } = this.props;
     navigation.navigate(toScreen)
+  }
+
+  adjustNumberPlayers = (increase) => {
+    let { numberPlayers } = this.state;
+    numberPlayers += increase? 1 : -1;
+    numberPlayers = numberPlayers < 2 ? 2 : numberPlayers;
+    numberPlayers = numberPlayers > 99 ? 99 : numberPlayers;
+    this.setState({numberPlayers: numberPlayers})
   }
 
   render() {
@@ -130,7 +146,7 @@ export class NumberPlayers extends Component {
           <View style={styles.rockerButton}>
             <TouchableHighlight
                 activeOpacity={1}
-                onPress={() => this.props.navigation.goBack()}
+                onPress={() => this.adjustNumberPlayers(false)}
                 style={styles.rockerLeftButton}
                 underlayColor={Colors.DARK_BLUE}>
               <Image
@@ -140,12 +156,12 @@ export class NumberPlayers extends Component {
             </TouchableHighlight>
             <View style={styles.rockerButtonTextArea}>
               <Text style={styles.rockerButtonText}>
-                8
+                {this.state.numberPlayers}
               </Text>
             </View>
               <TouchableHighlight
                   activeOpacity={1}
-                  onPress={() => this.props.navigation.goBack()}
+                  onPress={() => this.adjustNumberPlayers(true)}
                   style={styles.rockerRightButton}
                   underlayColor={Colors.DARK_BLUE}>
               <Image
