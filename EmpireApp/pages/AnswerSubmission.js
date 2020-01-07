@@ -82,15 +82,27 @@ const styles = StyleSheet.create({
   },
   progressBarInner: {
     backgroundColor: Colors.BOLD_BLUE,
-    width: '33%',
   },
 });
 
 export class AnswerSubmission extends Component {
 
+  constructor (props) {
+    super(props)
+    global.answers = [];
+    this.state = {
+      currentAnswer: '',
+      submitButtonEnabled: false,
+      numberSubmittedAnswers: 0,
+      progressBarWidth: '0%',
+      remainingPlayersText: this.getRemainingPlayersText(),
+      submitText: 'Submit',
+      textInputEditable: true,
+    };
+  }
+
   state = {
-    currentAnswer: '',
-    submitButtonEnabled: false,
+    numberSubmittedAnswers: 0,
   }
 
   navigate = (toScreen) => {
@@ -99,7 +111,6 @@ export class AnswerSubmission extends Component {
   }
 
   enableSubmitButton = (enable) => {
-    console.log('enabling submit button:', enable);
     this.setState({submitButtonEnabled: enable});
   }
 
@@ -114,14 +125,33 @@ export class AnswerSubmission extends Component {
   }
 
   submitAnswer = () => {
-
+    global.answers.push(this.state.currentAnswer);
+    this.answerInput.clear();
+    this.setState({numberSubmittedAnswers: global.answers.length});
+    this.setState({progressBarWidth: this.getProgressBarPercentageString()});
+    this.setState({remainingPlayersText: this.getRemainingPlayersText()})
+    console.log(global.answers.length, global.answers);
+    if (global.answers.length < global.numberPlayers) {
+      this.enableSubmitButton(false);
+    } else if (global.answers.length === global.numberPlayers) {
+      this.enableSubmitButton(true);
+      this.setState({submitText: 'Finish'});
+      this.setState({textInputEditable: false});
+    } else {
+      this.nextPage();
+    }
   }
 
   nextPage = () => {
     // global.numberFakes = this.state.numberFakes;
     // this.navigate('AnswerSubmissionScreen');
-    console.log(this.state.currentAnswer);
-    this.answerInput.clear();
+    console.log("moving on now");
+  }
+
+  getProgressBarPercentageString = () => {
+    let percent = global.answers.length / global.numberPlayers * 100;
+    let string = percent + '%';
+    return string;
   }
 
   getSubmitButtonStyle = () => {
@@ -129,6 +159,18 @@ export class AnswerSubmission extends Component {
       return styles.button;
     }
     return [styles.button, styles.disabledButton];
+  }
+
+  getRemainingPlayersText = () => {
+    // if (this.state.numberSubmittedAnswers)
+    //   this.state.numberSubmittedAnswers + 1/global.numberPlayers players
+    let string = '';
+    if (global.answers.length < global.numberPlayers) {
+      string = global.answers.length + ' of ' + global.numberPlayers + ' answers';
+    } else {
+      string = global.answers.length + ' of ' + global.numberPlayers + ' answers';
+    }
+    return string;
   }
 
   render() {
@@ -172,23 +214,24 @@ export class AnswerSubmission extends Component {
                   placeholderTextColor={Colors.LIGHT_BLUE}
                   ref={ref => (this.answerInput = ref)}
                   onSubmitEditing={this.onSubmitEditing}
+                  editable={this.state.textInputEditable}
               />
             </View>
             <View style={styles.sectionView}>
               <Text style={styles.progressText}>
-                3/8 players
+                {this.state.remainingPlayersText}
               </Text>
               <View style={styles.progressBarOuter}>
-                <View style={[styles.progressBarOuter, styles.progressBarInner]} />
+                <View style={[styles.progressBarOuter, styles.progressBarInner, {width: this.state.progressBarWidth}]} />
               </View>
               <TouchableHighlight
                   activeOpacity={1}
-                  onPress={this.nextPage}
+                  onPress={this.submitAnswer}
                   style={this.getSubmitButtonStyle()}
                   disabled={!this.state.submitButtonEnabled}
                   underlayColor={Colors.DARK_BLUE}>
                 <Text style={styles.buttonText}>
-                  Submit
+                  {this.state.submitText}
                 </Text>
               </TouchableHighlight>
             </View>
