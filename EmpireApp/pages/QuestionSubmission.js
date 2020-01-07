@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, TextInput, Text, TouchableHighlight, Image } from 'react-native';
 
-import { Colors } from '../core/styles/Colors';
 import QUESTIONS from '../assets/Questions';
+import { Colors } from '../core/styles/Colors';
 
 const styles = StyleSheet.create({
   container: {
@@ -48,6 +48,16 @@ const styles = StyleSheet.create({
   buttonArrow: {
     height: 20,
     width: 20,
+  },
+  questionInput: {
+    height: 48,
+    width: 278,
+    borderColor: Colors.LIGHT_BLUE,
+    borderWidth: 1,
+    paddingHorizontal: 20,
+    fontFamily: 'HelveticaNeue',
+    fontSize: 14,
+    color: Colors.DARK_BLUE,
   },
 });
 
@@ -95,7 +105,14 @@ export class QuestionSubmission extends Component {
           </Text>
         </View>
         <View style={styles.sectionView}>
-          <Text> input question </Text>
+          <TextInput
+              style={styles.questionInput}
+              placeholder='Your answer...'
+              returnKeyType='done'
+              placeholderTextColor={Colors.LIGHT_BLUE}
+          >
+
+          </TextInput>
         </View>
         <View style={styles.sectionView}>
           <TouchableHighlight
