@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, TextInput, Text, TouchableHighlight, Image } from 'react-native';
 
+import KeyboardShift from '../core/KeyboardShift';
 import QUESTIONS from '../assets/Questions';
 import { Colors } from '../core/styles/Colors';
 
@@ -75,58 +76,62 @@ export class QuestionSubmission extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <View>
-          <View style={styles.headerContainer}>
-            <TouchableHighlight
-                onPress={() => this.props.navigation.goBack()}
-                underlayColor={Colors.WHITE}>
-              <Image
-                  style={{height: 38, width: 32}}
-                  source={require('../assets/close2x.png')}
-              />
-            </TouchableHighlight>
-            <TouchableHighlight
-                onPress={() => this.navigate('RulesScreen')}
-                underlayColor={Colors.WHITE}>
-              <Image
-                  style={{height: 50, width: 47}}
-                  source={require('../assets/questionMark2x.png')}
-              />
-            </TouchableHighlight>
-          </View>
-          <Text style={styles.titleText}>
-            {QUESTIONS[global.questionIndex].question}
-          </Text>
-        </View>
-        <View style={styles.sectionView}>
-          <Text style={styles.explanationText}>
-            Pass the phone around for each{"\n"}player to enter their answer.
-          </Text>
-        </View>
-        <View style={styles.sectionView}>
-          <TextInput
-              style={styles.questionInput}
-              placeholder='Your answer...'
-              returnKeyType='done'
-              placeholderTextColor={Colors.LIGHT_BLUE}
-          >
+      <KeyboardShift>
+        {() => (
+          <View style={styles.container}>
+            <View>
+              <View style={styles.headerContainer}>
+                <TouchableHighlight
+                    onPress={() => this.props.navigation.goBack()}
+                    underlayColor={Colors.WHITE}>
+                  <Image
+                      style={{height: 38, width: 32}}
+                      source={require('../assets/close2x.png')}
+                  />
+                </TouchableHighlight>
+                <TouchableHighlight
+                    onPress={() => this.navigate('RulesScreen')}
+                    underlayColor={Colors.WHITE}>
+                  <Image
+                      style={{height: 50, width: 47}}
+                      source={require('../assets/questionMark2x.png')}
+                  />
+                </TouchableHighlight>
+              </View>
+              <Text style={styles.titleText}>
+                {QUESTIONS[global.questionIndex].question}
+              </Text>
+            </View>
+            <View style={styles.sectionView}>
+              <Text style={styles.explanationText}>
+                Pass the phone around for each{"\n"}player to enter their answer.
+              </Text>
+            </View>
+            <View style={styles.sectionView}>
+              <TextInput
+                  style={styles.questionInput}
+                  placeholder='Your answer...'
+                  returnKeyType='done'
+                  placeholderTextColor={Colors.LIGHT_BLUE}
+              >
 
-          </TextInput>
-        </View>
-        <View style={styles.sectionView}>
-          <TouchableHighlight
-              activeOpacity={1}
-              onPress={this.nextPage}
-              style={styles.button}
-              underlayColor={Colors.DARK_BLUE}>
-            <Image
-                source={require('../assets/nextArrow.png')}
-                style={styles.buttonArrow}
-            />
-          </TouchableHighlight>
-        </View>
-      </View>
+              </TextInput>
+            </View>
+            <View style={styles.sectionView}>
+              <TouchableHighlight
+                  activeOpacity={1}
+                  onPress={this.nextPage}
+                  style={styles.button}
+                  underlayColor={Colors.DARK_BLUE}>
+                <Image
+                    source={require('../assets/nextArrow.png')}
+                    style={styles.buttonArrow}
+                />
+              </TouchableHighlight>
+            </View>
+          </View>
+        )}
+      </KeyboardShift>
     );
   }
 }
