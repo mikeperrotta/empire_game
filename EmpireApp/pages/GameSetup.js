@@ -115,20 +115,43 @@ function QuestionObject({ index, question }) {
   );
 }
 
+const numberQuestionsShowing = 5;
+
 export class GameSetup extends Component {
+
+  selectedQuestionIndex = 0;
 
   navigate = (toScreen) => {
     const { navigation } = this.props;
-    navigation.navigate(toScreen)
+    navigation.navigate(toScreen);
+  }
+
+  onViewableItemsChanged = ({ viewableItems, changed }) => {
+    const indices = viewableItems.map(item => item.index);
+    let middleIndex = 2;
+    if (indices[0] === 0 && indices.length < numberQuestionsShowing) {
+      // If the first question is showing, we will have
+      // fewer than numberQuestionsShowing showing due to the
+      // white space above the question. We should adjust
+      // the middleIndex appropriately.
+      middleIndex -= (numberQuestionsShowing - indices.length);
+    }
+    this.selectedQuestionIndex = indices[middleIndex];
+  }
+
+  next = () => {
+    global.questionIndex = this.selectedQuestionIndex;
+    this.navigate('NumberFakesScreen');
   }
 
   render() {
+    const { navigation } = this.props;
     return (
       <View style={styles.container}>
         <View>
           <View style={styles.headerContainer}>
             <TouchableHighlight
-                onPress={() => this.props.navigation.goBack()}
+                onPress={() => navigation.goBack()}
                 underlayColor={Colors.WHITE}>
               <Image source={require('../assets/backArrow.png')} />
             </TouchableHighlight>
@@ -136,7 +159,7 @@ export class GameSetup extends Component {
                 onPress={() => this.navigate('RulesScreen')}
                 underlayColor={Colors.WHITE}>
               <Image
-                  style={{height: 50, width: 47}}
+                  style={{ height: 50, width: 47 }}
                   source={require('../assets/questionMark2x.png')}
               />
             </TouchableHighlight>
@@ -154,9 +177,10 @@ export class GameSetup extends Component {
           <FlatList
               data={QUESTIONS}
               keyExtractor={question => question.question}
-              snapToInterval={55}
+              onViewableItemsChanged={this.onViewableItemsChanged}
               renderItem={({ item, index }) => <QuestionObject index={index} question={item.question} />}
               showsVerticalScrollIndicator={false}
+              snapToInterval={55}
               style={styles.questionPicker}
           />
           <LinearGradient
@@ -174,7 +198,7 @@ export class GameSetup extends Component {
         <View style={styles.sectionView}>
           <TouchableHighlight
               activeOpacity={1}
-              onPress={() => this.navigate('NumberFakesScreen')}
+              onPress={this.next}
               style={styles.button}
               underlayColor={Colors.DARK_BLUE}>
             <Image
@@ -188,4 +212,4 @@ export class GameSetup extends Component {
   }
 }
 
-export default GameSetup
+export default GameSetup;
