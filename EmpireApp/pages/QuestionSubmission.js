@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     fontFamily: 'HelveticaNeue',
     fontSize: 20,
   },
-  questionInput: {
+  answerInput: {
     height: 48,
     width: 278,
     borderColor: Colors.LIGHT_BLUE,
@@ -70,10 +70,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export class QuestionSubmission extends Component {
+export class AnswerSubmission extends Component {
 
   state = {
-    currentQuestion: '',
+    currentAnswer: '',
     submitButtonEnabled: false,
   }
 
@@ -90,18 +90,22 @@ export class QuestionSubmission extends Component {
   onSubmitEditing = (event) => {
     let text = event.nativeEvent.text;
     if (text && text.trim()) {
-      this.setState({currentQuestion: text.trim()});
+      this.setState({currentAnswer: text.trim()});
       this.enableSubmitButton(true);
     } else {
       this.enableSubmitButton(false);
     }
   }
 
+  submitAnswer = () => {
+
+  }
+
   nextPage = () => {
     // global.numberFakes = this.state.numberFakes;
-    // this.navigate('QuestionSubmissionScreen');
-    console.log(this.state.currentQuestion);
-    this.questionInput.clear();
+    // this.navigate('AnswerSubmissionScreen');
+    console.log(this.state.currentAnswer);
+    this.answerInput.clear();
   }
 
   getSubmitButtonStyle = () => {
@@ -146,11 +150,11 @@ export class QuestionSubmission extends Component {
             </View>
             <View style={styles.sectionView}>
               <TextInput
-                  style={styles.questionInput}
+                  style={styles.answerInput}
                   placeholder='Your answer...'
                   returnKeyType='done'
                   placeholderTextColor={Colors.LIGHT_BLUE}
-                  ref={ref => (this.questionInput = ref)}
+                  ref={ref => (this.answerInput = ref)}
                   onSubmitEditing={this.onSubmitEditing}
               />
             </View>
@@ -173,4 +177,4 @@ export class QuestionSubmission extends Component {
   }
 }
 
-export default QuestionSubmission;
+export default AnswerSubmission;

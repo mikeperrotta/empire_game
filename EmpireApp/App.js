@@ -5,7 +5,7 @@ import Rules from './pages/Rules';
 import GameSetup from './pages/GameSetup'
 import NumberPlayers from './pages/NumberPlayers'
 import NumberFakes from './pages/NumberFakes'
-import QuestionSubmission from './pages/QuestionSubmission'
+import AnswerSubmission from './pages/AnswerSubmission'
 
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
@@ -16,7 +16,7 @@ const MainNavigator = createStackNavigator({
   GameSetupScreen: { screen: GameSetup },
   NumberPlayersScreen: {screen: NumberPlayers },
   NumberFakesScreen: {screen: NumberFakes },
-  QuestionSubmissionScreen: {screen: QuestionSubmission },
+  AnswerSubmissionScreen: {screen: AnswerSubmission },
 }, {
   initialRouteName: 'HomeScreen',
   headerMode: 'none',

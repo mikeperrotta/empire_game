@@ -146,7 +146,7 @@ export class NumberFakes extends Component {
 
   nextPage = () => {
     global.numberFakes = this.state.numberFakes;
-    this.navigate('QuestionSubmissionScreen');
+    this.navigate('AnswerSubmissionScreen');
   }
 
   render() {
