@@ -97,12 +97,25 @@ const styles = StyleSheet.create({
 const minNumberPlayers = 0;
 const maxNumberPlayers = 5;
 
+function getRecommendedNumberFakes(numberPlayers) {
+  if (numberPlayers <= 3) {
+    return 2;
+  }
+  if (numberPlayers <= 8) {
+    return 3;
+  }
+  if (numberPlayers <= 12) {
+    return 4;
+  }
+  return 5;
+}
+
 export class NumberFakes extends Component {
 
   constructor (props) {
     super(props)
     this.state = {
-      numberFakes: 3
+      numberFakes: getRecommendedNumberFakes(global.numberPlayers)
     }
   }
 
@@ -197,7 +210,7 @@ export class NumberFakes extends Component {
         </View>
         <View style={styles.sectionView}>
           <Text style={styles.explanationText}>
-            Please set the number of fake answers that will be added to the list of answers.{"\n\n"}For 8 players, we recommend 3 fake answers.
+            Please set the number of fake answers that will be added to the list of answers.{"\n\n"}For {global.numberPlayers} players, we recommend {getRecommendedNumberFakes(global.numberPlayers)} fake answers.
           </Text>
         </View>
         <View style={styles.sectionView}>
