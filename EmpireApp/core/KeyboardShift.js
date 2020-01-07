@@ -6,6 +6,9 @@ import { Animated, Dimensions, Keyboard, StyleSheet, TextInput, UIManager } from
 
 const { State: TextInputState } = TextInput;
 
+const gapMargin = 16;
+const animationSpeed = 350;
+
 export default class KeyboardShift extends Component {
   state = {
     shift: new Animated.Value(0),
@@ -38,7 +41,7 @@ export default class KeyboardShift extends Component {
     UIManager.measure(currentlyFocusedField, (originX, originY, width, height, pageX, pageY) => {
       const fieldHeight = height;
       const fieldTop = pageY;
-      const gap = (windowHeight - keyboardHeight) - (fieldTop + fieldHeight);
+      const gap = (windowHeight - keyboardHeight) - (fieldTop + fieldHeight + gapMargin);
       if (gap >= 0) {
         return;
       }
@@ -46,7 +49,7 @@ export default class KeyboardShift extends Component {
         this.state.shift,
         {
           toValue: gap,
-          duration: 350,
+          duration: animationSpeed,
           useNativeDriver: true,
         }
       ).start();
@@ -58,7 +61,7 @@ export default class KeyboardShift extends Component {
       this.state.shift,
       {
         toValue: 0,
-        duration: 350,
+        duration: animationSpeed,
         useNativeDriver: true,
       }
     ).start();
