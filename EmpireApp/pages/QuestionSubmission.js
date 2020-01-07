@@ -64,14 +64,34 @@ const styles = StyleSheet.create({
 
 export class QuestionSubmission extends Component {
 
+  state = {
+    currentQuestion: ''
+  }
+
   navigate = (toScreen) => {
     const { navigation } = this.props;
     navigation.navigate(toScreen)
   }
 
+  enableSubmitButton = (enable) => {
+    console.log('enabling submit button:', enable);
+  }
+
+  onSubmitEditing = (event) => {
+    let text = event.nativeEvent.text;
+    if (text && text.trim()) {
+      this.setState({currentQuestion: text.trim()});
+      this.enableSubmitButton(true);
+    } else {
+      this.enableSubmitButton(false);
+    }
+  }
+
   nextPage = () => {
     // global.numberFakes = this.state.numberFakes;
     // this.navigate('QuestionSubmissionScreen');
+    console.log(this.state.currentQuestion);
+    this.questionInput.clear();
   }
 
   render() {
@@ -113,9 +133,9 @@ export class QuestionSubmission extends Component {
                   placeholder='Your answer...'
                   returnKeyType='done'
                   placeholderTextColor={Colors.LIGHT_BLUE}
-              >
-
-              </TextInput>
+                  ref={ref => (this.questionInput = ref)}
+                  onSubmitEditing={this.onSubmitEditing}
+              />
             </View>
             <View style={styles.sectionView}>
               <TouchableHighlight
