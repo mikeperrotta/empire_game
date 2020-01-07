@@ -91,7 +91,7 @@ export class QuestionSubmission extends Component {
         </View>
         <View style={styles.sectionView}>
           <Text style={styles.explanationText}>
-            explanation text
+            Pass the phone around for each{"\n"}player to enter their answer.
           </Text>
         </View>
         <View style={styles.sectionView}>
