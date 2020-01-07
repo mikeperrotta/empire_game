@@ -66,7 +66,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     fontFamily: 'HelveticaNeue',
     fontSize: 14,
-    color: Colors.DARK_BLUE,
+    color: Colors.BOLD_BLUE,
+  },
+  progressText: {
+    fontFamily: 'Georgia',
+    fontSize: 40,
+    color: Colors.BOLD_BLUE,
+    margin: 16,
+  },
+  progressBarOuter: {
+    height: 18,
+    width: 278,
+    backgroundColor: Colors.OFF_WHITE,
+    borderRadius: 9,
+  },
+  progressBarInner: {
+    backgroundColor: Colors.BOLD_BLUE,
+    width: '33%',
   },
 });
 
@@ -159,6 +175,12 @@ export class AnswerSubmission extends Component {
               />
             </View>
             <View style={styles.sectionView}>
+              <Text style={styles.progressText}>
+                3/8 players
+              </Text>
+              <View style={styles.progressBarOuter}>
+                <View style={[styles.progressBarOuter, styles.progressBarInner]} />
+              </View>
               <TouchableHighlight
                   activeOpacity={1}
                   onPress={this.nextPage}
