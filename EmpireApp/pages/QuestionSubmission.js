@@ -46,9 +46,17 @@ const styles = StyleSheet.create({
     marginVertical: 24,
     width: 328,
   },
+  disabledButton: {
+    backgroundColor: Colors.LIGHT_BLUE,
+  },
   buttonArrow: {
     height: 20,
     width: 20,
+  },
+  buttonText: {
+    color: Colors.WHITE_TEXT,
+    fontFamily: 'HelveticaNeue',
+    fontSize: 20,
   },
   questionInput: {
     height: 48,
@@ -65,7 +73,8 @@ const styles = StyleSheet.create({
 export class QuestionSubmission extends Component {
 
   state = {
-    currentQuestion: ''
+    currentQuestion: '',
+    submitButtonEnabled: false,
   }
 
   navigate = (toScreen) => {
@@ -75,6 +84,7 @@ export class QuestionSubmission extends Component {
 
   enableSubmitButton = (enable) => {
     console.log('enabling submit button:', enable);
+    this.setState({submitButtonEnabled: enable});
   }
 
   onSubmitEditing = (event) => {
@@ -92,6 +102,13 @@ export class QuestionSubmission extends Component {
     // this.navigate('QuestionSubmissionScreen');
     console.log(this.state.currentQuestion);
     this.questionInput.clear();
+  }
+
+  getSubmitButtonStyle = () => {
+    if (this.state.submitButtonEnabled) {
+      return styles.button;
+    }
+    return [styles.button, styles.disabledButton];
   }
 
   render() {
@@ -141,12 +158,12 @@ export class QuestionSubmission extends Component {
               <TouchableHighlight
                   activeOpacity={1}
                   onPress={this.nextPage}
-                  style={styles.button}
+                  style={this.getSubmitButtonStyle()}
+                  disabled={!this.state.submitButtonEnabled}
                   underlayColor={Colors.DARK_BLUE}>
-                <Image
-                    source={require('../assets/nextArrow.png')}
-                    style={styles.buttonArrow}
-                />
+                <Text style={styles.buttonText}>
+                  Submit
+                </Text>
               </TouchableHighlight>
             </View>
           </View>
