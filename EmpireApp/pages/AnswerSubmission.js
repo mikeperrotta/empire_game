@@ -130,7 +130,6 @@ export class AnswerSubmission extends Component {
     this.setState({numberSubmittedAnswers: global.answers.length});
     this.setState({progressBarWidth: this.getProgressBarPercentageString()});
     this.setState({remainingPlayersText: this.getRemainingPlayersText()})
-    console.log(global.answers.length, global.answers);
     if (global.answers.length < global.numberPlayers) {
       this.enableSubmitButton(false);
     } else if (global.answers.length === global.numberPlayers) {
