@@ -101,7 +101,7 @@ export class NumberPlayers extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      numberPlayers: 5
+      numberPlayers: global.numberPlayers || 5
     }
   }
 
