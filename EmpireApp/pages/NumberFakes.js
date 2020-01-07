@@ -144,6 +144,11 @@ export class NumberFakes extends Component {
     this.setState({numberFakes: newNumberFakes});
   }
 
+  nextPage = () => {
+    global.numberFakes = this.state.numberFakes;
+    this.navigate('QuestionSubmissionScreen');
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -216,7 +221,7 @@ export class NumberFakes extends Component {
         <View style={styles.sectionView}>
           <TouchableHighlight
               activeOpacity={1}
-              onPress={() => this.navigate('GameSetupScreen')}
+              onPress={this.nextPage}
               style={styles.button}
               underlayColor={Colors.DARK_BLUE}>
             <Image
