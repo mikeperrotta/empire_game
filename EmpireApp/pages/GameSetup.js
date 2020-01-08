@@ -165,7 +165,7 @@ export class GameSetup extends Component {
             </TouchableHighlight>
           </View>
           <Text style={styles.titleText}>
-            Game Setup
+            Question
           </Text>
         </View>
         <View style={styles.sectionView}>
