@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, TextInput, Text, TouchableHighlight, Image } from 'react-native';
+import { StyleSheet, View, Text, TouchableHighlight, Image, ScrollView } from 'react-native';
 
 import KeyboardShift from '../core/KeyboardShift';
 import QUESTIONS from '../assets/Questions';
@@ -27,13 +27,30 @@ const styles = StyleSheet.create({
     lineHeight: 40,
   },
   explanationText: {
-    textAlign: 'center',
     fontFamily: 'HelveticaNeue',
     color: Colors.BOLD_BLUE,
     fontSize: 18,
-    width: 280,
+    marginHorizontal: 32,
+    marginVertical: 24,
+  },
+  answerText: {
+    fontFamily: 'HelveticaNeue',
+    color: Colors.BOLD_BLUE,
+    fontSize: 24,
+    padding: 20,
   },
   sectionView: {
+    alignItems: 'center',
+  },
+  listScrollView: {
+    alignSelf: 'center',
+    marginHorizontal: 30,
+    marginVertical: 10,
+    minWidth: '85%',
+  },
+  listSection: {
+    backgroundColor: Colors.VERY_LIGHT_BLUE,
+    borderRadius: 20,
     alignItems: 'center',
   },
   button: {
@@ -55,16 +72,55 @@ const styles = StyleSheet.create({
     fontFamily: 'HelveticaNeue',
     fontSize: 20,
   },
+  horizontalRule: {
+    borderBottomColor: Colors.WHITE,
+    borderBottomWidth: 1.5,
+    width: '100%',
+  },
 });
+
+const explanationText = 'All players get to read the list of answers once at the start of the game.\n\nThe list can be shown again if all players agree to see it again.\n\nOn your turn, you guess by matching any answer to any player.\n\nIf you guess incorrectly, the turn goes to the player you guessed.\n\nIf you guess correctly, the other player joins your empire and you get to guess again. \n\nThe game ends when one player is emperor of all others.'
 
 export class Game extends Component {
 
   state = {
-    showList: false,
+    showList: true,
   }
 
   toggleList = () => {
+    this.setState({showList: !this.state.showList});
+    this.scrollView.scrollTo({x: 0, y: 0, animated: false})
+  }
 
+  renderText = () => {
+    if (this.state.showList) {
+      return (
+        <>
+          {global.answers.map(answer =>
+            <>
+              <Text
+                  style={styles.answerText}
+                  key={answer}
+              >
+                {answer}
+              </Text>
+              <View style={styles.horizontalRule} />
+            </>
+          )}
+        </>
+      )
+    } else {
+      return(
+        <Text style={styles.explanationText}>
+          {explanationText}
+        </Text>
+      );
+    }
+  }
+
+  navigate = (toScreen) => {
+    const { navigation } = this.props;
+    navigation.navigate(toScreen)
   }
 
   render() {
@@ -93,11 +149,15 @@ export class Game extends Component {
             {QUESTIONS[global.questionIndex].question}
           </Text>
         </View>
-        <View style={styles.sectionView}>
-          <Text style={styles.explanationText}>
-            Pass the phone around for each{"\n"}player to enter their answer.
-          </Text>
-        </View>
+        <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={styles.listScrollView}
+            ref={ref => this.scrollView = ref}
+        >
+          <View style={styles.listSection}>
+            {this.renderText()}
+          </View>
+        </ScrollView>
         <View style={styles.sectionView}>
           <TouchableHighlight
               activeOpacity={1}
@@ -105,7 +165,7 @@ export class Game extends Component {
               style={styles.button}
               underlayColor={Colors.DARK_BLUE}>
             <Text style={styles.buttonText}>
-              Show List
+              {this.state.showList ? 'Hide List' : 'Show List'}
             </Text>
           </TouchableHighlight>
         </View>

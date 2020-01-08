@@ -2,6 +2,7 @@ export const Colors = {
   BOLD_BLUE: '#2699FB',
   DARK_BLUE: '#007FEB',
   LIGHT_BLUE: '#BCE0FD',
+  VERY_LIGHT_BLUE: '#F1F9FF',
   OFF_WHITE: '#F1F9FF',
   WHITE: '#FFFFFF',
   WHITE_TEXT: '#FFFFFF',
