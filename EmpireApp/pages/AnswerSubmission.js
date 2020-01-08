@@ -125,17 +125,19 @@ export class AnswerSubmission extends Component {
   }
 
   submitAnswer = () => {
-    global.answers.push(this.state.currentAnswer);
-    this.answerInput.clear();
-    this.setState({numberSubmittedAnswers: global.answers.length});
-    this.setState({progressBarWidth: this.getProgressBarPercentageString()});
-    this.setState({remainingPlayersText: this.getRemainingPlayersText()})
-    if (global.answers.length < global.numberPlayers) {
-      this.enableSubmitButton(false);
-    } else if (global.answers.length === global.numberPlayers) {
-      this.enableSubmitButton(true);
-      this.setState({submitText: 'Finish'});
-      this.setState({textInputEditable: false});
+    if (global.answers.length + 1 <= global.numberPlayers) {
+      global.answers.push(this.state.currentAnswer);
+      this.answerInput.clear();
+      this.setState({numberSubmittedAnswers: global.answers.length});
+      this.setState({progressBarWidth: this.getProgressBarPercentageString()});
+      this.setState({remainingPlayersText: this.getRemainingPlayersText()});
+      if (global.answers.length < global.numberPlayers) {
+        this.enableSubmitButton(false);
+      } else {
+        this.enableSubmitButton(true);
+        this.setState({submitText: 'Finish'});
+        this.setState({textInputEditable: false});
+      }
     } else {
       this.nextPage();
     }
