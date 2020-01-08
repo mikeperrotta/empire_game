@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableHighlight, Image, ScrollView } from 'react-native';
+import { Modal, StyleSheet, View, Text, TouchableHighlight, Image, ScrollView } from 'react-native';
 
 import KeyboardShift from '../core/KeyboardShift';
 import QUESTIONS from '../assets/Questions';
@@ -80,6 +80,42 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1.75,
     width: '100%',
   },
+  modalView: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.WHITE_HALF_TRANSPARENT,
+  },
+  modalSquare: {
+    backgroundColor: Colors.WHITE,
+    height: 300,
+    width: 300,
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.16,
+    shadowRadius: 2,
+  },
+  modalInnerContainer: {
+    flex: 1,
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+  },
+  modalText: {
+    fontFamily: 'HelveticaNeue',
+    fontSize: 28,
+    color: Colors.BOLD_BLUE,
+    paddingTop: 10,
+  },
+  smallButton: {
+    width: 120,
+    marginVertical: 5,
+  },
+  buttonArea: {
+    margin: 0,
+  },
 });
 
 const explanationText = 'All players get to read the list of answers once at the start of the game.\n\nThe list can be shown again if all players agree to see it again.\n\nOn your turn, you guess by matching any answer to any player.\n\nIf you guess incorrectly, the turn goes to the player you guessed.\n\nIf you guess correctly, the other player joins your empire and you get to guess again. \n\nThe game ends when one player is emperor of all others.'
@@ -99,7 +135,8 @@ export class Game extends Component {
   }
 
   state = {
-    showList: true,
+    showList: false,
+    modalVisible: false,
   }
 
   toggleList = () => {
@@ -138,13 +175,49 @@ export class Game extends Component {
     navigation.navigate(toScreen)
   }
 
+  setModalVisible = (visible) => {
+    this.setState({modalVisible: visible});
+  }
+
+  endGame = () => {
+  }
+
   render() {
     return (
       <View style={styles.container}>
+
+        <Modal
+            animationType='fade'
+            transparent={true}
+            visible={this.state.modalVisible}
+        >
+          <View style={styles.modalView}>
+            <View style={styles.modalSquare}>
+              <View style={styles.modalInnerContainer}>
+                <Text style={styles.modalText}>End Game?</Text>
+                <View style={styles.buttonArea}>
+                  <TouchableHighlight
+                      style={[styles.button, styles.smallButton]}
+                      onPress={this.endGame}
+                  >
+                    <Text style={styles.buttonText}>Yes</Text>
+                  </TouchableHighlight>
+                  <TouchableHighlight
+                      style={[styles.button, styles.smallButton]}
+                      onPress={() => this.setModalVisible(false)}
+                  >
+                    <Text style={styles.buttonText}>No, return</Text>
+                  </TouchableHighlight>
+                </View>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
         <View>
           <View style={styles.headerContainer}>
             <TouchableHighlight
-                onPress={() => this.props.navigation.goBack()}
+                onPress={() => this.setModalVisible(true)}
                 underlayColor={Colors.WHITE}>
               <Image
                   style={{height: 38, width: 32}}
