@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   },
   horizontalRule: {
     borderBottomColor: Colors.WHITE,
-    borderBottomWidth: 1.5,
+    borderBottomWidth: 1.75,
     width: '100%',
   },
 });
