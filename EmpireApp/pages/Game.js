@@ -5,6 +5,8 @@ import KeyboardShift from '../core/KeyboardShift';
 import QUESTIONS from '../assets/Questions';
 import { Colors } from '../core/styles/Colors';
 
+var shuffle = require('shuffle-array')
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.WHITE,
@@ -83,6 +85,18 @@ const styles = StyleSheet.create({
 const explanationText = 'All players get to read the list of answers once at the start of the game.\n\nThe list can be shown again if all players agree to see it again.\n\nOn your turn, you guess by matching any answer to any player.\n\nIf you guess incorrectly, the turn goes to the player you guessed.\n\nIf you guess correctly, the other player joins your empire and you get to guess again. \n\nThe game ends when one player is emperor of all others.'
 
 export class Game extends Component {
+
+  constructor (props) {
+    super(props)
+    global.answers = global.answers.concat(this.getFakeAnswers());
+    shuffle(global.answers);
+  }
+
+  getFakeAnswers = () => {
+    let answers = QUESTIONS[global.questionIndex].answers;
+    shuffle(answers);
+    return answers.splice(0, global.numberFakes);
+  }
 
   state = {
     showList: true,
