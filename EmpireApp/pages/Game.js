@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     color: Colors.BOLD_BLUE,
     fontSize: 24,
     padding: 20,
+    textAlign: 'center',
   },
   sectionView: {
     alignItems: 'center',
