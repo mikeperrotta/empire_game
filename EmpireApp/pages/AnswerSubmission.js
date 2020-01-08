@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     fontFamily: 'Georgia',
     color: Colors.BOLD_BLUE,
+    lineHeight: 40,
     fontSize: 32,
-    textAlign: 'center',
   },
   explanationText: {
     textAlign: 'center',
@@ -144,9 +144,7 @@ export class AnswerSubmission extends Component {
   }
 
   nextPage = () => {
-    // global.numberFakes = this.state.numberFakes;
-    // this.navigate('AnswerSubmissionScreen');
-    console.log("moving on now");
+    this.navigate('GameScreen');
   }
 
   getProgressBarPercentageString = () => {
