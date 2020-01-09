@@ -159,15 +159,16 @@ export class Game extends Component {
       return (
         <>
           {global.answers.map(answer =>
-            <>
+            <React.Fragment key={answer}>
               <Text
                   style={styles.answerText}
-                  key={answer}
               >
                 {answer}
               </Text>
-              <View style={styles.horizontalRule} />
-            </>
+              <View
+                  style={styles.horizontalRule}
+              />
+            </React.Fragment>
           )}
         </>
       )
