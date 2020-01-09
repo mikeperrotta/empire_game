@@ -379,6 +379,9 @@ export class AnswerSubmission extends Component {
   }
 
   endGame = () => {
+    global.answers = []
+    this.setState({endGameModalVisible: false});
+    this.navigate('HomeScreen');
   }
 
   render() {

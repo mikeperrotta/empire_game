@@ -191,6 +191,9 @@ export class Game extends Component {
   }
 
   endGame = () => {
+    global.answers = []
+    this.setModalVisible(false);
+    this.navigate('HomeScreen');
   }
 
   render() {
