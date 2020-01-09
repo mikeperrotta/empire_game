@@ -141,13 +141,12 @@ export class AnswerSubmission extends Component {
       duplicateModalVisible: false,
       previousDuplicateModalVisible: false,
       endGameModalVisible: false,
+      allAnswersCollected: false,
     };
   }
 
   fuzzyset = FuzzySet({useLevenshtein: false});
   previousDuplicates = FuzzySet({useLevenshtein: false});
-
-  allAnswersCollected = false;
 
   state = {
     numberSubmittedAnswers: 0,
@@ -231,12 +230,12 @@ export class AnswerSubmission extends Component {
       this.enableSubmitButton(true);
       this.setState({submitText: 'Finish'});
       this.setState({textInputEditable: false});
-      this.allAnswersCollected = true;
+      this.setState({allAnswersCollected: true});
     }
   }
 
   submitAnswer = () => {
-    if (!this.allAnswersCollected) {
+    if (!this.state.allAnswersCollected) {
       let currentAnswer = this.state.currentAnswer;
       let duplicate = this.checkIsDuplicate(currentAnswer);
       if (duplicate) {
@@ -422,22 +421,35 @@ export class AnswerSubmission extends Component {
                   {QUESTIONS[global.questionIndex].question}
                 </Text>
               </View>
-              <View style={styles.sectionView}>
-                <Text style={styles.explanationText}>
-                  Pass the phone around for each{"\n"}player to enter their answer.
-                </Text>
-              </View>
-              <View style={styles.sectionView}>
-                <TextInput
-                    style={styles.answerInput}
-                    placeholder='Your answer...'
-                    returnKeyType='done'
-                    placeholderTextColor={Colors.LIGHT_BLUE}
-                    ref={ref => (this.answerInput = ref)}
-                    onSubmitEditing={this.onSubmitEditing}
-                    editable={this.state.textInputEditable}
-                />
-              </View>
+
+              {!this.state.allAnswersCollected ? (
+                <>
+                  <View style={styles.sectionView}>
+                    <Text style={styles.explanationText}>
+                      Pass the phone around for each{"\n"}player to enter their answer.
+                    </Text>
+                  </View>
+                  <View style={styles.sectionView}>
+                    <TextInput
+                        style={styles.answerInput}
+                        placeholder='Your answer...'
+                        returnKeyType='done'
+                        placeholderTextColor={Colors.LIGHT_BLUE}
+                        ref={ref => (this.answerInput = ref)}
+                        onSubmitEditing={this.onSubmitEditing}
+                        editable={this.state.textInputEditable}
+                    />
+                  </View>
+                </>
+              ) : (
+                <View style={styles.sectionView}>
+                  <Text style={styles.explanationText}>
+                    All answers have been submitted. Get ready to play!
+                  </Text>
+                </View>
+              )
+              }
+
               <View style={styles.sectionView}>
                 <Text style={styles.progressText}>
                   {this.state.remainingPlayersText}
