@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, TextInput, Text, TouchableHighlight, Image } from 'react-native';
+import { StyleSheet, Modal, View, TextInput, Text, TouchableHighlight, Image } from 'react-native';
 
 import KeyboardShift from '../core/KeyboardShift';
 import QUESTIONS from '../assets/Questions';
@@ -83,6 +83,45 @@ const styles = StyleSheet.create({
   progressBarInner: {
     backgroundColor: Colors.BOLD_BLUE,
   },
+  modalView: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.WHITE_HALF_TRANSPARENT,
+  },
+  modalSquare: {
+    backgroundColor: Colors.WHITE,
+    height: 370,
+    width: 300,
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.16,
+    shadowRadius: 2,
+  },
+  modalInnerContainer: {
+    flex: 1,
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+  },
+  modalText: {
+    fontFamily: 'HelveticaNeue',
+    fontSize: 28,
+    color: Colors.BOLD_BLUE,
+    paddingTop: 10,
+  },
+  modalExplanationText: {
+    fontSize: 14,
+  },
+  smallButton: {
+    width: 120,
+    marginVertical: 5,
+  },
+  buttonArea: {
+    margin: 0,
+  },
 });
 
 export class AnswerSubmission extends Component {
@@ -98,6 +137,9 @@ export class AnswerSubmission extends Component {
       remainingPlayersText: this.getRemainingPlayersText(),
       submitText: 'Submit',
       textInputEditable: true,
+      duplicateModalVisible: false,
+      previousDuplicateModalVisible: false,
+      endGameModalVisible: false,
     };
   }
 
@@ -122,6 +164,14 @@ export class AnswerSubmission extends Component {
     } else {
       this.enableSubmitButton(false);
     }
+  }
+
+  duplicateEntered = () => {
+
+  }
+
+  showDuplicateModal = (show) => {
+    this.setState({duplicateModalVisible: show});
   }
 
   submitAnswer = () => {
@@ -172,71 +222,186 @@ export class AnswerSubmission extends Component {
     return string;
   }
 
-  render() {
+  renderDuplicateModal = (previousAnswer) => {
     return (
-      <KeyboardShift>
-        {() => (
-          <View style={styles.container}>
-            <View>
-              <View style={styles.headerContainer}>
+      <Modal
+          animationType='fade'
+          transparent={true}
+          visible={this.state.duplicateModalVisible}
+      >
+        <View style={styles.modalView}>
+          <View style={styles.modalSquare}>
+            <View style={styles.modalInnerContainer}>
+              <Text style={styles.modalText}>Duplicate!</Text>
+              <Text style={[styles.explanationText, styles.modalExplanationText]}>
+                You and another player both entered the same answers. Both answers will be removed and you and the other player must submit new answers.{"\n\n"}Please find the other player who entered "{previousAnswer}" and let them know that they must enter a new answer.
+              </Text>
+              <View style={styles.buttonArea}>
                 <TouchableHighlight
-                    onPress={() => this.props.navigation.goBack()}
-                    underlayColor={Colors.WHITE}>
-                  <Image
-                      style={{height: 38, width: 32}}
-                      source={require('../assets/close2x.png')}
-                  />
-                </TouchableHighlight>
-                <TouchableHighlight
-                    onPress={() => this.navigate('RulesScreen')}
-                    underlayColor={Colors.WHITE}>
-                  <Image
-                      style={{height: 50, width: 47}}
-                      source={require('../assets/questionMark2x.png')}
-                  />
+                    activeOpacity={1}
+                    underlayColor={Colors.DARK_BLUE}
+                    style={[styles.button, styles.smallButton]}
+                    onPress={() => this.setState({duplicateModalVisible: false})}
+                >
+                  <Text style={styles.buttonText}>Okay</Text>
                 </TouchableHighlight>
               </View>
-              <Text style={styles.titleText}>
-                {QUESTIONS[global.questionIndex].question}
-              </Text>
-            </View>
-            <View style={styles.sectionView}>
-              <Text style={styles.explanationText}>
-                Pass the phone around for each{"\n"}player to enter their answer.
-              </Text>
-            </View>
-            <View style={styles.sectionView}>
-              <TextInput
-                  style={styles.answerInput}
-                  placeholder='Your answer...'
-                  returnKeyType='done'
-                  placeholderTextColor={Colors.LIGHT_BLUE}
-                  ref={ref => (this.answerInput = ref)}
-                  onSubmitEditing={this.onSubmitEditing}
-                  editable={this.state.textInputEditable}
-              />
-            </View>
-            <View style={styles.sectionView}>
-              <Text style={styles.progressText}>
-                {this.state.remainingPlayersText}
-              </Text>
-              <View style={styles.progressBarOuter}>
-                <View style={[styles.progressBarOuter, styles.progressBarInner, {width: this.state.progressBarWidth}]} />
-              </View>
-              <TouchableHighlight
-                  activeOpacity={1}
-                  onPress={this.submitAnswer}
-                  style={this.getSubmitButtonStyle()}
-                  disabled={!this.state.submitButtonEnabled}
-                  underlayColor={Colors.DARK_BLUE}>
-                <Text style={styles.buttonText}>
-                  {this.state.submitText}
-                </Text>
-              </TouchableHighlight>
             </View>
           </View>
-        )}
-      </KeyboardShift>
+        </View>
+        </Modal>
+    );
+  }
+
+  renderPreviousDuplicateModal = (previousAnswer) => {
+    return (
+      <Modal
+          animationType='fade'
+          transparent={true}
+          visible={this.state.previousDuplicateModalVisible}
+      >
+        <View style={styles.modalView}>
+          <View style={[styles.modalSquare, {height: 310}]}>
+            <View style={styles.modalInnerContainer}>
+              <Text style={styles.modalText}>Duplicate!</Text>
+              <Text style={[styles.explanationText, styles.modalExplanationText]}>
+                Your answer "{previousAnswer}" was previously thrown out because two other players submitted that answer.{"\n\n"}Please submit a new answer.
+              </Text>
+              <View style={styles.buttonArea}>
+                <TouchableHighlight
+                    activeOpacity={1}
+                    underlayColor={Colors.DARK_BLUE}
+                    style={[styles.button, styles.smallButton]}
+                    onPress={() => this.setState({previousDuplicateModalVisible: false})}
+                >
+                  <Text style={styles.buttonText}>Okay</Text>
+                </TouchableHighlight>
+              </View>
+            </View>
+          </View>
+        </View>
+        </Modal>
+    );
+  }
+
+  renderEndGameModal = () => {
+    return (
+      <Modal
+          animationType='fade'
+          transparent={true}
+          visible={this.state.endGameModalVisible}
+      >
+        <View style={styles.modalView}>
+          <View style={[styles.modalSquare, {height: 300}]}>
+            <View style={styles.modalInnerContainer}>
+              <Text style={styles.modalText}>End Game?</Text>
+              <View style={styles.buttonArea}>
+                <TouchableHighlight
+                    activeOpacity={1}
+                    underlayColor={Colors.DARK_BLUE}
+                    style={[styles.button, styles.smallButton]}
+                    onPress={this.endGame}
+                >
+                  <Text style={styles.buttonText}>Yes</Text>
+                </TouchableHighlight>
+                <TouchableHighlight
+                    activeOpacity={1}
+                    underlayColor={Colors.DARK_BLUE}
+                    style={[styles.button, styles.smallButton]}
+                    onPress={() => this.setState({endGameModalVisible: false})}
+                >
+                  <Text style={styles.buttonText}>No, return</Text>
+                </TouchableHighlight>
+              </View>
+            </View>
+          </View>
+        </View>
+      </Modal>
+    );
+  }
+
+  endGame = () => {
+  }
+
+  render() {
+    return (
+      <>
+      {
+        this.renderDuplicateModal("Cleopatra")
+      }
+      {
+        this.renderPreviousDuplicateModal("Cleopatra")
+      }
+      {
+        this.renderEndGameModal()
+      }
+
+
+
+        <KeyboardShift>
+          {() => (
+            <View style={styles.container}>
+              <View>
+                <View style={styles.headerContainer}>
+                  <TouchableHighlight
+                      onPress={() => this.setState({endGameModalVisible: true})}
+                      underlayColor={Colors.WHITE}>
+                    <Image
+                        style={{height: 38, width: 32}}
+                        source={require('../assets/close2x.png')}
+                    />
+                  </TouchableHighlight>
+                  <TouchableHighlight
+                      onPress={() => this.navigate('RulesScreen')}
+                      underlayColor={Colors.WHITE}>
+                    <Image
+                        style={{height: 50, width: 47}}
+                        source={require('../assets/questionMark2x.png')}
+                    />
+                  </TouchableHighlight>
+                </View>
+                <Text style={styles.titleText}>
+                  {QUESTIONS[global.questionIndex].question}
+                </Text>
+              </View>
+              <View style={styles.sectionView}>
+                <Text style={styles.explanationText}>
+                  Pass the phone around for each{"\n"}player to enter their answer.
+                </Text>
+              </View>
+              <View style={styles.sectionView}>
+                <TextInput
+                    style={styles.answerInput}
+                    placeholder='Your answer...'
+                    returnKeyType='done'
+                    placeholderTextColor={Colors.LIGHT_BLUE}
+                    ref={ref => (this.answerInput = ref)}
+                    onSubmitEditing={this.onSubmitEditing}
+                    editable={this.state.textInputEditable}
+                />
+              </View>
+              <View style={styles.sectionView}>
+                <Text style={styles.progressText}>
+                  {this.state.remainingPlayersText}
+                </Text>
+                <View style={styles.progressBarOuter}>
+                  <View style={[styles.progressBarOuter, styles.progressBarInner, {width: this.state.progressBarWidth}]} />
+                </View>
+                <TouchableHighlight
+                    activeOpacity={1}
+                    onPress={this.submitAnswer}
+                    style={this.getSubmitButtonStyle()}
+                    disabled={!this.state.submitButtonEnabled}
+                    underlayColor={Colors.DARK_BLUE}>
+                  <Text style={styles.buttonText}>
+                    {this.state.submitText}
+                  </Text>
+                </TouchableHighlight>
+              </View>
+            </View>
+          )}
+        </KeyboardShift>
+      </>
     );
   }
 }
