@@ -119,7 +119,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const explanationText = 'All players get to read the list of answers once at the start of the game.\n\nThe list can be shown again if all players agree to see it again.\n\nOn your turn, you guess by matching any answer to any player.\n\nIf you guess incorrectly, the turn goes to the player you guessed.\n\nIf you guess correctly, the other player joins your empire and you get to guess again. \n\nThe game ends when one player is emperor of all others.'
+function explanationText(numPlayers, numFakes) {
+   return 'All players get to read the list of answers once at the start of the game.\n\nThe list contains ' + numPlayers + ' real answers plus ' + numFakes + ' fake answer' + (numFakes === 1 ? '' : 's') + ', for a total of ' + (numPlayers + numFakes) + ' answers.\n\nThe list can be shown again if all players agree to see it again.\n\nOn your turn, you guess by matching any answer to any player.\n\nIf you guess incorrectly, the turn goes to the player you guessed.\n\nIf you guess correctly, the other player joins your empire and you get to guess again. \n\nThe game ends when one player is emperor of all others.'
+ }
 
 export class Game extends Component {
 
@@ -132,6 +134,8 @@ export class Game extends Component {
 
   fuzzyset = FuzzySet({useLevenshtein: false});
 
+  actualNumberFakes;
+
   userAnsweredAlready = (newAnswer) => {
     let check = this.fuzzyset.get(newAnswer, null, 0.4);
     return check;
@@ -141,7 +145,9 @@ export class Game extends Component {
     let answers = QUESTIONS[global.questionIndex].answers;
     answers = answers.filter(answer => !this.userAnsweredAlready(answer));
     shuffle(answers);
-    return answers.splice(0, global.numberFakes);
+    let fakes = answers.splice(0, global.numberFakes);
+    this.actualNumberFakes = fakes.length;
+    return fakes;
   }
 
   state = {
@@ -175,7 +181,7 @@ export class Game extends Component {
     } else {
       return(
         <Text style={styles.explanationText}>
-          {explanationText}
+          {explanationText(global.numberPlayers, this.actualNumberFakes)}
         </Text>
       );
     }
