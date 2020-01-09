@@ -197,12 +197,16 @@ export class Game extends Component {
                 <Text style={styles.modalText}>End Game?</Text>
                 <View style={styles.buttonArea}>
                   <TouchableHighlight
+                      activeOpacity={1}
+                      underlayColor={Colors.DARK_BLUE}
                       style={[styles.button, styles.smallButton]}
                       onPress={this.endGame}
                   >
                     <Text style={styles.buttonText}>Yes</Text>
                   </TouchableHighlight>
                   <TouchableHighlight
+                      activeOpacity={1}
+                      underlayColor={Colors.DARK_BLUE}
                       style={[styles.button, styles.smallButton]}
                       onPress={() => this.setModalVisible(false)}
                   >
