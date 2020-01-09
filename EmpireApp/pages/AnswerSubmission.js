@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
   },
   modalExplanationText: {
     fontSize: 14,
+    paddingHorizontal: 10,
   },
   smallButton: {
     width: 120,
