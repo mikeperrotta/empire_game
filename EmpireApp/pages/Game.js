@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, StyleSheet, View, Text, TouchableHighlight, Image, ScrollView } from 'react-native';
+import FuzzySet from 'fuzzyset.js';
 
 import KeyboardShift from '../core/KeyboardShift';
 import QUESTIONS from '../assets/Questions';
@@ -124,12 +125,21 @@ export class Game extends Component {
 
   constructor (props) {
     super(props)
+    global.answers.forEach((answer) => this.fuzzyset.add(answer));
     global.answers = global.answers.concat(this.getFakeAnswers());
     shuffle(global.answers);
   }
 
+  fuzzyset = FuzzySet({useLevenshtein: false});
+
+  userAnsweredAlready = (newAnswer) => {
+    let check = this.fuzzyset.get(newAnswer, null, 0.4);
+    return check;
+  }
+
   getFakeAnswers = () => {
     let answers = QUESTIONS[global.questionIndex].answers;
+    answers = answers.filter(answer => !this.userAnsweredAlready(answer));
     shuffle(answers);
     return answers.splice(0, global.numberFakes);
   }
