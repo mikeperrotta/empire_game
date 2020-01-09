@@ -229,7 +229,7 @@ export class AnswerSubmission extends Component {
       this.enableSubmitButton(false);
     } else {  // If this was the last answer we needed
       this.enableSubmitButton(true);
-      this.setState({submitText: 'Finish'});
+      this.setState({submitText: 'Play!'});
       this.setState({textInputEditable: false});
       this.setState({allAnswersCollected: true});
     }
