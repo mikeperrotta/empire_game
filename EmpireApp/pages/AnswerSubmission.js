@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Modal, View, TextInput, Text, TouchableHighlight, Image } from 'react-native';
+import FuzzySet from 'fuzzyset.js';
 
 import KeyboardShift from '../core/KeyboardShift';
 import QUESTIONS from '../assets/Questions';
@@ -143,6 +144,11 @@ export class AnswerSubmission extends Component {
     };
   }
 
+  fuzzyset = FuzzySet({useLevenshtein: false});
+  previousDuplicates = FuzzySet({useLevenshtein: false});
+
+  allAnswersCollected = false;
+
   state = {
     numberSubmittedAnswers: 0,
   }
@@ -166,27 +172,79 @@ export class AnswerSubmission extends Component {
     }
   }
 
-  duplicateEntered = () => {
+  duplicateEntered = (duplicate) => {
+    this.answerInput.clear();
+    this.currentDuplicate = duplicate;
+    this.previousDuplicates.add(duplicate);
+    this.previousDuplicates.add(this.state.currentAnswer);
+    this.showDuplicateModal(true);
+    this.removePreviousAnswer(duplicate);
+    this.updateNumberAnswersUI();
+  }
 
+  previousDuplicateEntered = () => {
+    this.answerInput.clear();
+    this.previousDuplicates.add(this.state.currentAnswer);
+    this.showPreviousDuplicateModal(true);
+  }
+
+  removePreviousAnswer = (previousAnswer) => {
+    var index = global.answers.indexOf(previousAnswer);
+    if (index !== -1) {
+      global.answers.splice(index, 1);
+    }
+    this.fuzzyset = FuzzySet({useLevenshtein: false});
+    global.answers.forEach((answer) => this.fuzzyset.add(answer));
   }
 
   showDuplicateModal = (show) => {
     this.setState({duplicateModalVisible: show});
   }
 
+  showPreviousDuplicateModal = (show) => {
+    this.setState({previousDuplicateModalVisible: show});
+  }
+
+  checkIsDuplicate = (newAnswer) => {
+    let fuzzyCheck = this.fuzzyset.get(newAnswer, null, 0.4);
+    return fuzzyCheck == null ? null : fuzzyCheck[0][1];
+  }
+
+  checkIsPreviousDuplicate = (newAnswer) => {
+    return this.previousDuplicates.get(newAnswer, null, 0.4);
+  }
+
+  updateNumberAnswersUI = () => {
+    this.setState({numberSubmittedAnswers: global.answers.length});
+    this.setState({progressBarWidth: this.getProgressBarPercentageString()});
+    this.setState({remainingPlayersText: this.getRemainingPlayersText()});
+  }
+
+  addAnswer = (newAnswer) => {
+    global.answers.push(this.state.currentAnswer);
+    this.fuzzyset.add(this.state.currentAnswer);
+    this.answerInput.clear();
+    this.updateNumberAnswersUI();
+    if (global.answers.length < global.numberPlayers) {  // If we still need more answers
+      this.enableSubmitButton(false);
+    } else {  // If this was the last answer we needed
+      this.enableSubmitButton(true);
+      this.setState({submitText: 'Finish'});
+      this.setState({textInputEditable: false});
+      this.allAnswersCollected = true;
+    }
+  }
+
   submitAnswer = () => {
-    if (global.answers.length + 1 <= global.numberPlayers) {
-      global.answers.push(this.state.currentAnswer);
-      this.answerInput.clear();
-      this.setState({numberSubmittedAnswers: global.answers.length});
-      this.setState({progressBarWidth: this.getProgressBarPercentageString()});
-      this.setState({remainingPlayersText: this.getRemainingPlayersText()});
-      if (global.answers.length < global.numberPlayers) {
-        this.enableSubmitButton(false);
+    if (!this.allAnswersCollected) {
+      let currentAnswer = this.state.currentAnswer;
+      let duplicate = this.checkIsDuplicate(currentAnswer);
+      if (duplicate) {
+        this.duplicateEntered(duplicate);
+      } else if (this.checkIsPreviousDuplicate(currentAnswer)) {
+        this.previousDuplicateEntered();
       } else {
-        this.enableSubmitButton(true);
-        this.setState({submitText: 'Finish'});
-        this.setState({textInputEditable: false});
+        this.addAnswer(currentAnswer);
       }
     } else {
       this.nextPage();
@@ -222,7 +280,7 @@ export class AnswerSubmission extends Component {
     return string;
   }
 
-  renderDuplicateModal = (previousAnswer) => {
+  renderDuplicateModal = () => {
     return (
       <Modal
           animationType='fade'
@@ -234,7 +292,7 @@ export class AnswerSubmission extends Component {
             <View style={styles.modalInnerContainer}>
               <Text style={styles.modalText}>Duplicate!</Text>
               <Text style={[styles.explanationText, styles.modalExplanationText]}>
-                You and another player both entered the same answers. Both answers will be removed and you and the other player must submit new answers.{"\n\n"}Please find the other player who entered "{previousAnswer}" and let them know that they must enter a new answer.
+                You and another player entered the same (or very similar) answers. Both answers will be removed and you and the other player must submit new answers.{"\n\n"}Please find the other player who entered "{this.currentDuplicate}" and let them know that they must enter a new answer.
               </Text>
               <View style={styles.buttonArea}>
                 <TouchableHighlight
@@ -253,7 +311,7 @@ export class AnswerSubmission extends Component {
     );
   }
 
-  renderPreviousDuplicateModal = (previousAnswer) => {
+  renderPreviousDuplicateModal = () => {
     return (
       <Modal
           animationType='fade'
@@ -265,7 +323,7 @@ export class AnswerSubmission extends Component {
             <View style={styles.modalInnerContainer}>
               <Text style={styles.modalText}>Duplicate!</Text>
               <Text style={[styles.explanationText, styles.modalExplanationText]}>
-                Your answer "{previousAnswer}" was previously thrown out because two other players submitted that answer.{"\n\n"}Please submit a new answer.
+                Your answer "{this.state.currentAnswer}" was previously thrown out because two other players submitted that answer.{"\n\n"}Please submit a new answer.
               </Text>
               <View style={styles.buttonArea}>
                 <TouchableHighlight
