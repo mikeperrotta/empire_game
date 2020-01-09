@@ -15,18 +15,18 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   titleText: {
-    marginVertical: 22,
-    marginHorizontal: 32,
-    fontFamily: 'Georgia',
     color: Colors.BOLD_BLUE,
+    fontFamily: 'Georgia',
     fontSize: 32,
+    marginHorizontal: 32,
+    marginVertical: 22,
   },
   rulesText: {
-    fontSize: 14,
-    fontFamily: 'HelveticaNeue',
     color: Colors.BOLD_BLUE,
-    margin: 32,
+    fontFamily: 'HelveticaNeue',
+    fontSize: 14,
     lineHeight: 24,
+    margin: 32,
   },
 });
 
@@ -44,7 +44,8 @@ export class Rules extends Component {
         <View style={styles.headerContainer}>
           <TouchableHighlight
               onPress={() => this.props.navigation.goBack()}
-              underlayColor={Colors.WHITE}>
+              underlayColor={Colors.WHITE}
+          >
             <Image source={require('../assets/backArrow.png')} />
           </TouchableHighlight>
         </View>

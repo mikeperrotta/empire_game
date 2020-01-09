@@ -13,9 +13,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.BOLD_BLUE,
     borderRadius: 5,
     height: 48,
+    margin: 20,
     padding: 10,
     width: 148,
-    margin: 20,
   },
   buttonContainer: {
     margin: 30,
@@ -46,25 +46,29 @@ export class Home extends Component {
   render() {
     return (
       <ImageBackground
+          source={require('../assets/homepageBackground.png')}
           style={styles.backgroundImage}
-          source={require('../assets/homepageBackground.png')}>
+      >
         <View style={styles.container}>
           <Image
+              source={require('../assets/logo2x.png')}
               style={styles.logoImage}
-              source={require('../assets/logo2x.png')} />
+          />
           <View style={styles.buttonContainer}>
             <TouchableHighlight
                 activeOpacity={1}
                 onPress={() => this.navigate('NumberPlayersScreen')}
                 style={styles.button}
-                underlayColor={Colors.DARK_BLUE}>
+                underlayColor={Colors.DARK_BLUE}
+            >
               <Text style={styles.text}> Play </Text>
             </TouchableHighlight>
             <TouchableHighlight
                 activeOpacity={1}
                 onPress={() => this.navigate('RulesScreen')}
                 style={styles.button}
-                underlayColor={Colors.DARK_BLUE}>
+                underlayColor={Colors.DARK_BLUE}
+            >
               <Text style={styles.text}> Rules </Text>
             </TouchableHighlight>
           </View>

@@ -22,18 +22,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   titleText: {
+    color: Colors.BOLD_BLUE,
+    fontFamily: 'Georgia',
+    fontSize: 32,
     marginVertical: 10,
     textAlign: 'center',
-    fontFamily: 'Georgia',
-    color: Colors.BOLD_BLUE,
-    fontSize: 32,
   },
   explanationText: {
-    textAlign: 'center',
-    fontFamily: 'HelveticaNeue',
     color: Colors.BOLD_BLUE,
+    fontFamily: 'HelveticaNeue',
     fontSize: 18,
     marginHorizontal: 64,
+    textAlign: 'center',
   },
   questionPicker: {
     height: 270,
@@ -43,10 +43,10 @@ const styles = StyleSheet.create({
     height: 55,
   },
   questionText: {
-    textAlign: 'left',
-    width: 192,
     fontSize: 14,
     marginVertical: 10,
+    textAlign: 'left',
+    width: 192,
   },
   horizontalRule: {
     borderBottomColor: Colors.BOLD_BLUE,
@@ -57,16 +57,16 @@ const styles = StyleSheet.create({
     height: 110,
   },
   linearGradient: {
-    position: 'absolute',
-    top: 0,
     bottom: 0,
     left: 0,
+    position: 'absolute',
     right: 0,
+    top: 0,
   },
   next: {
     alignItems: 'center',
-    position: 'absolute',
     bottom: 0,
+    position: 'absolute',
   },
   button: {
     alignItems: 'center',
@@ -74,8 +74,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     height: 48,
     justifyContent: 'center',
-    marginHorizontal: 20,
     marginBottom: 24,
+    marginHorizontal: 20,
     marginTop: 12,
     width: 328,
   },
@@ -152,15 +152,16 @@ export class GameSetup extends Component {
           <View style={styles.headerContainer}>
             <TouchableHighlight
                 onPress={() => navigation.goBack()}
-                underlayColor={Colors.WHITE}>
+                underlayColor={Colors.WHITE}
+            >
               <Image source={require('../assets/backArrow.png')} />
             </TouchableHighlight>
             <TouchableHighlight
                 onPress={() => this.navigate('RulesScreen')}
                 underlayColor={Colors.WHITE}>
               <Image
-                  style={{ height: 50, width: 47 }}
                   source={require('../assets/questionMark2x.png')}
+                  style={{ height: 50, width: 47 }}
               />
             </TouchableHighlight>
           </View>
@@ -200,7 +201,8 @@ export class GameSetup extends Component {
               activeOpacity={1}
               onPress={this.next}
               style={styles.button}
-              underlayColor={Colors.DARK_BLUE}>
+              underlayColor={Colors.DARK_BLUE}
+          >
             <Image
                 source={require('../assets/nextArrow.png')}
                 style={styles.buttonArrow}

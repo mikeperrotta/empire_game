@@ -22,23 +22,23 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   titleText: {
-    marginVertical: 10,
-    marginHorizontal: 30,
-    fontFamily: 'Georgia',
     color: Colors.BOLD_BLUE,
+    fontFamily: 'Georgia',
     fontSize: 32,
     lineHeight: 40,
+    marginHorizontal: 30,
+    marginVertical: 10,
   },
   explanationText: {
-    fontFamily: 'HelveticaNeue',
     color: Colors.BOLD_BLUE,
+    fontFamily: 'HelveticaNeue',
     fontSize: 18,
     marginHorizontal: 32,
     marginVertical: 24,
   },
   answerText: {
-    fontFamily: 'HelveticaNeue',
     color: Colors.BOLD_BLUE,
+    fontFamily: 'HelveticaNeue',
     fontSize: 24,
     padding: 20,
     textAlign: 'center',
@@ -53,9 +53,9 @@ const styles = StyleSheet.create({
     minWidth: '85%',
   },
   listSection: {
+    alignItems: 'center',
     backgroundColor: Colors.VERY_LIGHT_BLUE,
     borderRadius: 20,
-    alignItems: 'center',
   },
   button: {
     alignItems: 'center',
@@ -82,37 +82,37 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   modalView: {
-    flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: Colors.WHITE_HALF_TRANSPARENT,
+    flex: 1,
+    justifyContent: 'center',
   },
   modalSquare: {
-    backgroundColor: Colors.WHITE,
-    height: 300,
-    width: 300,
-    borderRadius: 30,
     alignItems: 'center',
+    backgroundColor: Colors.WHITE,
+    borderRadius: 30,
+    height: 300,
     justifyContent: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.16,
     shadowRadius: 2,
+    width: 300,
   },
   modalInnerContainer: {
+    alignItems: 'center',
     flex: 1,
     justifyContent: 'space-evenly',
-    alignItems: 'center',
   },
   modalText: {
+    color: Colors.BOLD_BLUE,
     fontFamily: 'HelveticaNeue',
     fontSize: 28,
-    color: Colors.BOLD_BLUE,
     paddingTop: 10,
   },
   smallButton: {
-    width: 120,
     marginVertical: 5,
+    width: 120,
   },
   buttonArea: {
     margin: 0,
@@ -151,8 +151,8 @@ export class Game extends Component {
   }
 
   state = {
-    showList: false,
     modalVisible: false,
+    showList: false,
   }
 
   toggleList = () => {
@@ -218,17 +218,17 @@ export class Game extends Component {
                 <View style={styles.buttonArea}>
                   <TouchableHighlight
                       activeOpacity={1}
-                      underlayColor={Colors.DARK_BLUE}
-                      style={[styles.button, styles.smallButton]}
                       onPress={this.endGame}
+                      style={[styles.button, styles.smallButton]}
+                      underlayColor={Colors.DARK_BLUE}
                   >
                     <Text style={styles.buttonText}>Yes</Text>
                   </TouchableHighlight>
                   <TouchableHighlight
                       activeOpacity={1}
-                      underlayColor={Colors.DARK_BLUE}
-                      style={[styles.button, styles.smallButton]}
                       onPress={() => this.setModalVisible(false)}
+                      style={[styles.button, styles.smallButton]}
+                      underlayColor={Colors.DARK_BLUE}
                   >
                     <Text style={styles.buttonText}>No, return</Text>
                   </TouchableHighlight>
@@ -244,16 +244,16 @@ export class Game extends Component {
                 onPress={() => this.setModalVisible(true)}
                 underlayColor={Colors.WHITE}>
               <Image
-                  style={{height: 38, width: 32}}
                   source={require('../assets/close2x.png')}
+                  style={{height: 38, width: 32}}
               />
             </TouchableHighlight>
             <TouchableHighlight
                 onPress={() => this.navigate('RulesScreen')}
                 underlayColor={Colors.WHITE}>
               <Image
-                  style={{height: 50, width: 47}}
                   source={require('../assets/questionMark2x.png')}
+                  style={{height: 50, width: 47}}
               />
             </TouchableHighlight>
           </View>
@@ -262,9 +262,9 @@ export class Game extends Component {
           </Text>
         </View>
         <ScrollView
+            ref={ref => this.scrollView = ref}
             showsVerticalScrollIndicator={false}
             style={styles.listScrollView}
-            ref={ref => this.scrollView = ref}
         >
           <View style={styles.listSection}>
             {this.renderText()}

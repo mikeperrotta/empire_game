@@ -20,18 +20,18 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   titleText: {
-    marginVertical: 10,
-    marginHorizontal: 30,
-    fontFamily: 'Georgia',
     color: Colors.BOLD_BLUE,
-    lineHeight: 40,
+    fontFamily: 'Georgia',
     fontSize: 32,
+    lineHeight: 40,
+    marginHorizontal: 30,
+    marginVertical: 10,
   },
   explanationText: {
-    textAlign: 'center',
-    fontFamily: 'HelveticaNeue',
     color: Colors.BOLD_BLUE,
+    fontFamily: 'HelveticaNeue',
     fontSize: 18,
+    textAlign: 'center',
     width: 280,
   },
   sectionView: {
@@ -60,57 +60,57 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   answerInput: {
-    height: 48,
-    width: 278,
     borderColor: Colors.LIGHT_BLUE,
     borderWidth: 1,
-    paddingHorizontal: 20,
+    color: Colors.BOLD_BLUE,
     fontFamily: 'HelveticaNeue',
     fontSize: 14,
-    color: Colors.BOLD_BLUE,
+    height: 48,
+    paddingHorizontal: 20,
+    width: 278,
   },
   progressText: {
+    color: Colors.BOLD_BLUE,
     fontFamily: 'Georgia',
     fontSize: 40,
-    color: Colors.BOLD_BLUE,
     margin: 16,
   },
   progressBarOuter: {
-    height: 18,
-    width: 278,
     backgroundColor: Colors.OFF_WHITE,
     borderRadius: 9,
+    height: 18,
+    width: 278,
   },
   progressBarInner: {
     backgroundColor: Colors.BOLD_BLUE,
   },
   modalView: {
-    flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: Colors.WHITE_HALF_TRANSPARENT,
+    flex: 1,
+    justifyContent: 'center',
   },
   modalSquare: {
-    backgroundColor: Colors.WHITE,
-    height: 370,
-    width: 300,
-    borderRadius: 30,
     alignItems: 'center',
+    backgroundColor: Colors.WHITE,
+    borderRadius: 30,
+    height: 370,
     justifyContent: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.16,
     shadowRadius: 2,
+    width: 300,
   },
   modalInnerContainer: {
+    alignItems: 'center',
     flex: 1,
     justifyContent: 'space-evenly',
-    alignItems: 'center',
   },
   modalText: {
+    color: Colors.BOLD_BLUE,
     fontFamily: 'HelveticaNeue',
     fontSize: 28,
-    color: Colors.BOLD_BLUE,
     paddingTop: 10,
   },
   modalExplanationText: {
@@ -118,8 +118,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   smallButton: {
-    width: 120,
     marginVertical: 5,
+    width: 120,
   },
   buttonArea: {
     margin: 0,
@@ -132,17 +132,17 @@ export class AnswerSubmission extends Component {
     super(props)
     global.answers = [];
     this.state = {
+      allAnswersCollected: false,
       currentAnswer: '',
-      submitButtonEnabled: false,
+      duplicateModalVisible: false,
+      endGameModalVisible: false,
       numberSubmittedAnswers: 0,
+      previousDuplicateModalVisible: false,
       progressBarWidth: '0%',
       remainingPlayersText: this.getRemainingPlayersText(),
+      submitButtonEnabled: false,
       submitText: 'Submit',
       textInputEditable: true,
-      duplicateModalVisible: false,
-      previousDuplicateModalVisible: false,
-      endGameModalVisible: false,
-      allAnswersCollected: false,
     };
   }
 
@@ -297,9 +297,9 @@ export class AnswerSubmission extends Component {
               <View style={styles.buttonArea}>
                 <TouchableHighlight
                     activeOpacity={1}
-                    underlayColor={Colors.DARK_BLUE}
-                    style={[styles.button, styles.smallButton]}
                     onPress={() => this.setState({duplicateModalVisible: false})}
+                    style={[styles.button, styles.smallButton]}
+                    underlayColor={Colors.DARK_BLUE}
                 >
                   <Text style={styles.buttonText}>Okay</Text>
                 </TouchableHighlight>
@@ -328,9 +328,9 @@ export class AnswerSubmission extends Component {
               <View style={styles.buttonArea}>
                 <TouchableHighlight
                     activeOpacity={1}
-                    underlayColor={Colors.DARK_BLUE}
-                    style={[styles.button, styles.smallButton]}
                     onPress={() => this.setState({previousDuplicateModalVisible: false})}
+                    style={[styles.button, styles.smallButton]}
+                    underlayColor={Colors.DARK_BLUE}
                 >
                   <Text style={styles.buttonText}>Okay</Text>
                 </TouchableHighlight>
@@ -356,17 +356,17 @@ export class AnswerSubmission extends Component {
               <View style={styles.buttonArea}>
                 <TouchableHighlight
                     activeOpacity={1}
-                    underlayColor={Colors.DARK_BLUE}
-                    style={[styles.button, styles.smallButton]}
                     onPress={this.endGame}
+                    style={[styles.button, styles.smallButton]}
+                    underlayColor={Colors.DARK_BLUE}
                 >
                   <Text style={styles.buttonText}>Yes</Text>
                 </TouchableHighlight>
                 <TouchableHighlight
                     activeOpacity={1}
-                    underlayColor={Colors.DARK_BLUE}
-                    style={[styles.button, styles.smallButton]}
                     onPress={() => this.setState({endGameModalVisible: false})}
+                    style={[styles.button, styles.smallButton]}
+                    underlayColor={Colors.DARK_BLUE}
                 >
                   <Text style={styles.buttonText}>No, return</Text>
                 </TouchableHighlight>
@@ -408,16 +408,16 @@ export class AnswerSubmission extends Component {
                       onPress={() => this.setState({endGameModalVisible: true})}
                       underlayColor={Colors.WHITE}>
                     <Image
-                        style={{height: 38, width: 32}}
                         source={require('../assets/close2x.png')}
+                        style={{height: 38, width: 32}}
                     />
                   </TouchableHighlight>
                   <TouchableHighlight
                       onPress={() => this.navigate('RulesScreen')}
                       underlayColor={Colors.WHITE}>
                     <Image
-                        style={{height: 50, width: 47}}
                         source={require('../assets/questionMark2x.png')}
+                        style={{height: 50, width: 47}}
                     />
                   </TouchableHighlight>
                 </View>
@@ -435,13 +435,13 @@ export class AnswerSubmission extends Component {
                   </View>
                   <View style={styles.sectionView}>
                     <TextInput
-                        style={styles.answerInput}
+                        editable={this.state.textInputEditable}
+                        onSubmitEditing={this.onSubmitEditing}
                         placeholder='Your answer...'
-                        returnKeyType='done'
                         placeholderTextColor={Colors.LIGHT_BLUE}
                         ref={ref => (this.answerInput = ref)}
-                        onSubmitEditing={this.onSubmitEditing}
-                        editable={this.state.textInputEditable}
+                        returnKeyType='done'
+                        style={styles.answerInput}
                     />
                   </View>
                 </>
@@ -463,10 +463,11 @@ export class AnswerSubmission extends Component {
                 </View>
                 <TouchableHighlight
                     activeOpacity={1}
+                    disabled={!this.state.submitButtonEnabled}
                     onPress={this.submitAnswer}
                     style={this.getSubmitButtonStyle()}
-                    disabled={!this.state.submitButtonEnabled}
-                    underlayColor={Colors.DARK_BLUE}>
+                    underlayColor={Colors.DARK_BLUE}
+                >
                   <Text style={styles.buttonText}>
                     {this.state.submitText}
                   </Text>

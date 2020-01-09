@@ -17,17 +17,17 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   titleText: {
-    marginVertical: 10,
-    fontFamily: 'Georgia',
     color: Colors.BOLD_BLUE,
+    fontFamily: 'Georgia',
     fontSize: 32,
+    marginVertical: 10,
     textAlign: 'center',
   },
   explanationText: {
-    textAlign: 'center',
-    fontFamily: 'HelveticaNeue',
     color: Colors.BOLD_BLUE,
+    fontFamily: 'HelveticaNeue',
     fontSize: 18,
+    textAlign: 'center',
     width: 280,
   },
   sectionView: {
@@ -53,39 +53,39 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   rockerLeftButton: {
-    height: 68,
-    width: 68,
-    backgroundColor: Colors.BOLD_BLUE,
-    borderTopLeftRadius: 8,
-    borderBottomLeftRadius: 8,
     alignItems: 'center',
+    backgroundColor: Colors.BOLD_BLUE,
+    borderBottomLeftRadius: 8,
+    borderTopLeftRadius: 8,
+    height: 68,
     justifyContent: 'center',
+    width: 68,
   },
   rockerButtonTextArea: {
-    height: 68,
-    width: 62,
     backgroundColor: Colors.WHITE,
-    borderColor: Colors.BOLD_BLUE,
-    borderTopWidth: 3,
     borderBottomWidth: 3,
+    borderColor: Colors.BOLD_BLUE,
     borderLeftWidth: 0,
     borderRightWidth: 0,
+    borderTopWidth: 3,
+    height: 68,
     justifyContent: 'center',
+    width: 62,
   },
   rockerButtonText: {
+    color: Colors.BOLD_BLUE,
     fontFamily: 'HelveticaNeue',
     fontSize: 42,
-    color: Colors.BOLD_BLUE,
     textAlign: 'center',
   },
   rockerRightButton: {
-    height: 68,
-    width: 68,
-    backgroundColor: Colors.BOLD_BLUE,
-    borderTopRightRadius: 8,
-    borderBottomRightRadius: 8,
     alignItems: 'center',
+    backgroundColor: Colors.BOLD_BLUE,
+    borderBottomRightRadius: 8,
+    borderTopRightRadius: 8,
+    height: 68,
     justifyContent: 'center',
+    width: 68,
   },
   buttonArrow: {
     height: 20,
@@ -142,15 +142,17 @@ export class NumberPlayers extends Component {
           <View style={styles.headerContainer}>
             <TouchableHighlight
                 onPress={() => this.props.navigation.goBack()}
-                underlayColor={Colors.WHITE}>
+                underlayColor={Colors.WHITE}
+            >
               <Image source={require('../assets/backArrow.png')} />
             </TouchableHighlight>
             <TouchableHighlight
                 onPress={() => this.navigate('RulesScreen')}
-                underlayColor={Colors.WHITE}>
+                underlayColor={Colors.WHITE}
+            >
               <Image
-                  style={{height: 50, width: 47}}
                   source={require('../assets/questionMark2x.png')}
+                  style={{height: 50, width: 47}}
               />
             </TouchableHighlight>
           </View>
@@ -160,18 +162,19 @@ export class NumberPlayers extends Component {
         </View>
         <View style={styles.sectionView}>
           <Image
-              style={styles.peopleSymbol}
               source={require('../assets/people2x.png')}
+              style={styles.peopleSymbol}
           />
           <View style={styles.rockerButton}>
             <TouchableHighlight
                 activeOpacity={1}
                 onPress={() => this.adjustNumberPlayers(false)}
                 style={styles.rockerLeftButton}
-                underlayColor={Colors.DARK_BLUE}>
+                underlayColor={Colors.DARK_BLUE}
+            >
               <Image
-                  style={{height: 41, width: 48}}
                   source={require('../assets/minus2x.png')}
+                  style={{height: 41, width: 48}}
               />
             </TouchableHighlight>
             <View style={styles.rockerButtonTextArea}>
@@ -191,10 +194,11 @@ export class NumberPlayers extends Component {
                   activeOpacity={1}
                   onPress={() => this.adjustNumberPlayers(true)}
                   style={styles.rockerRightButton}
-                  underlayColor={Colors.DARK_BLUE}>
+                  underlayColor={Colors.DARK_BLUE}
+              >
               <Image
-                  style={{height: 41, width: 48}}
                   source={require('../assets/plus2x.png')}
+                  style={{height: 41, width: 48}}
               />
             </TouchableHighlight>
           </View>
@@ -209,7 +213,8 @@ export class NumberPlayers extends Component {
               activeOpacity={1}
               onPress={this.nextPage}
               style={styles.button}
-              underlayColor={Colors.DARK_BLUE}>
+              underlayColor={Colors.DARK_BLUE}
+          >
             <Image
                 source={require('../assets/nextArrow.png')}
                 style={styles.buttonArrow}
