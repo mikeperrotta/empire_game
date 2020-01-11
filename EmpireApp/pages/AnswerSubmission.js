@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   },
   modalText: {
     color: Colors.BOLD_BLUE,
-    fontFamily: 'HelveticaNeue',
+    fontFamily: 'Georgia',
     fontSize: 28,
     paddingTop: 10,
   },
@@ -352,7 +352,7 @@ export class AnswerSubmission extends Component {
         <View style={styles.modalView}>
           <View style={[styles.modalSquare, {height: 300}]}>
             <View style={styles.modalInnerContainer}>
-              <Text style={styles.modalText}>End Game?</Text>
+              <Text style={styles.modalText}>End game?</Text>
               <View style={styles.buttonArea}>
                 <TouchableHighlight
                     activeOpacity={1}
