@@ -405,7 +405,7 @@ const QUESTIONS = [{
     'Tacos',
   ]
 }, {
-  question: 'What historical event would you change with a time machine?',
+  question: 'What historical event would you stop from happening?',
   answers: [
     '9/11',
     'Agricultural revolution',
