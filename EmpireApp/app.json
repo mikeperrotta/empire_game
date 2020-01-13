@@ -6,15 +6,15 @@
     "sdkVersion": "36.0.0",
     "platforms": [
       "ios",
-      "android",
-      "web"
+      "android"
     ],
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "description": "A fun room game for any group",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
@@ -24,7 +24,14 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
-    }
+      "supportsTablet": true,
+  		"bundleIdentifier": "com.mikeperrotta.empire",
+      "buildNumber": "1"
+    },
+		"android": {
+			"package": "com.mikeperrotta.empire",
+      "permissions": [],
+      "versionCode": 2
+		}
   }
 }
