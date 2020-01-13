@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
+import { StatusBar } from 'react-native';
 
 import AnswerSubmission from './pages/AnswerSubmission'
 import Game from './pages/Game'
@@ -30,6 +31,7 @@ const AppContainer = createAppContainer(MainNavigator);
 
 export default class App extends Component {
   render() {
+    StatusBar.setBarStyle('dark-content', true);
     return (
       <AppContainer />
     );
