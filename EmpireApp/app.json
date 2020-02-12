@@ -24,9 +24,9 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
   		"bundleIdentifier": "com.mikeperrotta.empire",
-      "buildNumber": "2"
+      "buildNumber": "3"
     },
 		"android": {
 			"package": "com.mikeperrotta.empire",
