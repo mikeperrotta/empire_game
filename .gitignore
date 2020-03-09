@@ -99,3 +99,4 @@ RNTester/Pods/*
 .vs
 .gitsecret/keys/random_seed
 !*.secret
+EmpireApp/core/Secrets.js
