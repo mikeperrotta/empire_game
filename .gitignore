@@ -97,3 +97,5 @@ RNTester/Pods/*
 # Visual studio
 .vscode
 .vs
+.gitsecret/keys/random_seed
+!*.secret
