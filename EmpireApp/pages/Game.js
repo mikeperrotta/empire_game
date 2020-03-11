@@ -157,6 +157,8 @@ export class Game extends Component {
   }
 
   toggleList = () => {
+    Analytics.logEvent(Analytics.events.TOGGLE_LIST,
+      {"isNowShowing": !this.state.showList});
     this.setState({showList: !this.state.showList});
     this.scrollView.scrollTo({x: 0, y: 0, animated: false})
   }
