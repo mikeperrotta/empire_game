@@ -391,7 +391,7 @@ export class AnswerSubmission extends Component {
                 </TouchableHighlight>
                 <TouchableHighlight
                     activeOpacity={1}
-                    onPress={() => this.setState({endGameModalVisible: false})}
+                    onPress={() => this.setEndGameModalVisible(false)}
                     style={[styles.button, styles.smallButton]}
                     underlayColor={Colors.DARK_BLUE}
                 >
@@ -405,9 +405,18 @@ export class AnswerSubmission extends Component {
     );
   }
 
+  setEndGameModalVisible = (visible) => {
+    Analytics.logEvent(Analytics.events.OPEN_END_GAME_MODAL,
+      {
+        "currentPage": "AnswerSubmissionScreen",
+        "modalNowOpened": visible,
+      });
+    this.setState({endGameModalVisible: visible});
+  }
+
   endGame = () => {
     global.answers = []
-    this.setState({endGameModalVisible: false});
+    this.setEndGameModalVisible(false);
     this.navigate('HomeScreen');
   }
 
@@ -432,7 +441,7 @@ export class AnswerSubmission extends Component {
               <View>
                 <View style={styles.headerContainer}>
                   <TouchableHighlight
-                      onPress={() => this.setState({endGameModalVisible: true})}
+                      onPress={() => this.setEndGameModalVisible(true)}
                       underlayColor={Colors.WHITE}>
                     <Image
                         source={require('../assets/close2x.png')}

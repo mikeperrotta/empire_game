@@ -196,6 +196,11 @@ export class Game extends Component {
   }
 
   setModalVisible = (visible) => {
+    Analytics.logEvent(Analytics.events.OPEN_END_GAME_MODAL,
+      {
+        "currentPage": "GameScreen",
+        "modalNowOpened": visible,
+      });
     this.setState({modalVisible: visible});
   }
 
