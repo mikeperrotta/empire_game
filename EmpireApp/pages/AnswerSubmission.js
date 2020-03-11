@@ -239,19 +239,20 @@ export class AnswerSubmission extends Component {
   }
 
   submitAnswer = () => {
-    if (!this.state.allAnswersCollected) {
-      let currentAnswer = this.state.currentAnswer;
-      let duplicate = this.checkIsDuplicate(currentAnswer);
-      if (duplicate) {
-        this.duplicateEntered(duplicate);
-      } else if (this.checkIsPreviousDuplicate(currentAnswer)) {
-        this.previousDuplicateEntered();
-      } else {
-        this.addAnswer(currentAnswer);
-      }
-    } else {
+    if (this.state.allAnswersCollected) {
       this.nextPage();
+      return;
     }
+    let currentAnswer = this.state.currentAnswer;
+    let duplicate = this.checkIsDuplicate(currentAnswer);
+    if (duplicate) {
+      this.duplicateEntered(duplicate);
+      return;
+    }
+    if (this.checkIsPreviousDuplicate(currentAnswer)) {
+        return;
+    }
+    this.addAnswer(currentAnswer);
   }
 
   nextPage = () => {
