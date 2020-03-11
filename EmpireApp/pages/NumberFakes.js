@@ -156,6 +156,8 @@ export class NumberFakes extends Component {
 
   nextPage = () => {
     global.numberFakes = this.state.numberFakes;
+    Analytics.logEvent(Analytics.events.SET_NUMBER_FAKES,
+      {"numberFakes": global.numberFakes});
     this.navigate('AnswerSubmissionScreen');
   }
 

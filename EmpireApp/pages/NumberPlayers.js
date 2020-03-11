@@ -142,6 +142,8 @@ export class NumberPlayers extends Component {
 
   nextPage = () => {
     global.numberPlayers = this.state.numberPlayers;
+    Analytics.logEvent(Analytics.events.SET_NUMBER_PLAYERS,
+      {"numberPlayers": global.numberPlayers});
     this.navigate('GameSetupScreen');
   }
 

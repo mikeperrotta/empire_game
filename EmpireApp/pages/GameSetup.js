@@ -151,6 +151,11 @@ export class GameSetup extends Component {
 
   next = () => {
     global.questionIndex = this.selectedQuestionIndex;
+    Analytics.logEvent(Analytics.events.SELECT_QUESTION,
+      {
+        "selectedQuestion": QUESTIONS[global.questionIndex],
+        "selectedQuestionIndex": global.questionIndex,
+      });
     this.navigate('NumberFakesScreen');
   }
 
