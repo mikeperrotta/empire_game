@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
 import { StatusBar } from 'react-native';
 
+import * as Analytics from './core/Analytics';
 import AnswerSubmission from './pages/AnswerSubmission'
 import Game from './pages/Game'
 import GameSetup from './pages/GameSetup'
@@ -30,6 +31,11 @@ const MainNavigator = createStackNavigator({
 const AppContainer = createAppContainer(MainNavigator);
 
 export default class App extends Component {
+  constructor (props) {
+    Analytics.logEvent(Analytics.events.APP_START);
+    super(props);
+  }
+
   render() {
     StatusBar.setBarStyle('dark-content', true);
     return (
