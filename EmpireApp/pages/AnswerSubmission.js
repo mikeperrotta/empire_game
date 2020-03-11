@@ -245,15 +245,37 @@ export class AnswerSubmission extends Component {
       return;
     }
     let currentAnswer = this.state.currentAnswer;
+    Analytics.logEvent(Analytics.events.SUBMIT_ANSWER_TRY,
+      {
+        "submittedAnswer": currentAnswer,
+        "numberSubmittedAnswers": this.state.numberSubmittedAnswers,
+      });
     let duplicate = this.checkIsDuplicate(currentAnswer);
     if (duplicate) {
+      Analytics.logEvent(Analytics.events.DETECTED_DUPLICATE,
+        {
+          "submittedAnswer": currentAnswer,
+          "duplicate": duplicate,
+        });
       this.duplicateEntered(duplicate[0][1]);
       return;
     }
-    if (this.checkIsPreviousDuplicate(currentAnswer)) {
+    let previousDuplicate = this.checkIsPreviousDuplicate(currentAnswer);
+    if (previousDuplicate) {
+      Analytics.logEvent(Analytics.events.DETECTED_DUPLICATE,
+        {
+          "submittedAnswer": currentAnswer,
+          "previousDuplicate": previousDuplicate,
+        });
+        this.previousDuplicateEntered();
         return;
     }
     this.addAnswer(currentAnswer);
+    Analytics.logEvent(Analytics.events.SUBMIT_ANSWER_SUCCESS,
+      {
+        "submittedAnswer": currentAnswer,
+        "numberSubmittedAnswers": this.state.numberSubmittedAnswers,
+      });
   }
 
   nextPage = () => {
