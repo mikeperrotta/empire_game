@@ -127,7 +127,7 @@ function explanationText(numPlayers, numFakes) {
 export class Game extends Component {
 
   constructor (props) {
-    super(props)
+    super(props);
     global.answers.forEach((answer) => this.fuzzyset.add(answer));
     let fakeAnswers = this.getFakeAnswers();
     let submittedAnswers = global.answers;
