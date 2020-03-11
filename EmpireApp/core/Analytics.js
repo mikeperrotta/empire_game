@@ -13,10 +13,10 @@ export const events = {
   SET_NUMBER_PLAYERS: "SET_NUMBER_PLAYERS",
   SET_NUMBER_FAKES: "SET_NUMBER_FAKES",
   SELECT_QUESTION: "SELECT_QUESTION",
-  SUBMIT_ANSWER: "SUBMIT_ANSWER",
-  DEDECTED_DUPLICATE: "DEDECTED_DUPLICATE",
-  DEDECTED_PREVIOUS_DUPLICATE: "DEDECTED_PREVIOUS_DUPLICATE",
-  START_GAME: "START_GAME",
+  SUBMIT_ANSWER_TRY: "SUBMIT_ANSWER_TRY",
+  SUBMIT_ANSWER_SUCCESS: "SUBMIT_ANSWER_SUCCESS",
+  DETECTED_DUPLICATE: "DETECTED_DUPLICATE",
+  DETECTED_PREVIOUS_DUPLICATE: "DETECTED_PREVIOUS_DUPLICATE",
   TOGGLE_LIST: "TOGGLE_LIST",
   OPEN_END_GAME_MODAL: "OPEN_END_GAME_MODAL",
 };
@@ -31,9 +31,9 @@ export function initialize(): void {
 
 export function logEvent(event: string, properties: string=null): void {
   initialize();
-  Amplitude.logEvent(event);
   console.log(event);
   if (properties) {
+    Amplitude.logEventWithProperties(event, properties);
     console.log(properties);
   } else {
     Amplitude.logEvent(event);
