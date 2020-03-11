@@ -7,6 +7,8 @@ import KeyboardShift from '../core/KeyboardShift';
 import QUESTIONS from '../assets/Questions';
 import { Colors } from '../core/styles/Colors';
 
+const fuzzyThreshold = 0.675;
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.WHITE,
@@ -209,12 +211,11 @@ export class AnswerSubmission extends Component {
   }
 
   checkIsDuplicate = (newAnswer) => {
-    let fuzzyCheck = this.fuzzyset.get(newAnswer, null, 0.4);
-    return fuzzyCheck == null ? null : fuzzyCheck[0][1];
+    return this.fuzzyset.get(newAnswer, null, fuzzyThreshold);
   }
 
   checkIsPreviousDuplicate = (newAnswer) => {
-    return this.previousDuplicates.get(newAnswer, null, 0.4);
+    return this.previousDuplicates.get(newAnswer, null, fuzzyThreshold);
   }
 
   updateNumberAnswersUI = () => {
@@ -246,7 +247,7 @@ export class AnswerSubmission extends Component {
     let currentAnswer = this.state.currentAnswer;
     let duplicate = this.checkIsDuplicate(currentAnswer);
     if (duplicate) {
-      this.duplicateEntered(duplicate);
+      this.duplicateEntered(duplicate[0][1]);
       return;
     }
     if (this.checkIsPreviousDuplicate(currentAnswer)) {
