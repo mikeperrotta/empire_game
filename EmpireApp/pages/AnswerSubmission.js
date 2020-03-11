@@ -432,9 +432,6 @@ export class AnswerSubmission extends Component {
       {
         this.renderEndGameModal()
       }
-
-
-
         <KeyboardShift>
           {() => (
             <View style={styles.container}>
