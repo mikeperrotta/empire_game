@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Image, ImageBackground, Button, TouchableHighlight } from 'react-native';
 
+import * as Analytics from '../core/Analytics';
 import { Colors } from '../core/styles/Colors';
 
 const styles = StyleSheet.create({
@@ -39,6 +40,8 @@ const styles = StyleSheet.create({
 
 export class Home extends Component {
   navigate = (toScreen) => {
+    Analytics.logEvent(Analytics.events.PAGE_CHANGE,
+      {"fromPage": "HomeScreen", "toPage": toScreen});
     const { navigation } = this.props;
     navigation.navigate(toScreen)
   }

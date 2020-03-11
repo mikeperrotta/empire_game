@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, ScrollView, View, TextInput, Text, TouchableHighlight, Image } from 'react-native';
 
+import * as Analytics from '../core/Analytics';
 import { Colors } from '../core/styles/Colors';
 
 const styles = StyleSheet.create({
@@ -120,8 +121,17 @@ export class NumberFakes extends Component {
   }
 
   navigate = (toScreen) => {
+    Analytics.logEvent(Analytics.events.PAGE_CHANGE,
+      {"fromPage": "NumberFakesScreen", "toPage": toScreen});
     const { navigation } = this.props;
     navigation.navigate(toScreen)
+  }
+
+  goBack = () => {
+    Analytics.logEvent(Analytics.events.PAGE_BACK,
+      {"fromPage": "NumberFakesScreen"});
+    const { navigation } = this.props;
+    navigation.goBack();
   }
 
   adjustNumberFakes = (increase) => {
@@ -155,7 +165,7 @@ export class NumberFakes extends Component {
         <View>
           <View style={styles.headerContainer}>
             <TouchableHighlight
-                onPress={() => this.props.navigation.goBack()}
+                onPress={() => this.goBack()}
                 underlayColor={Colors.WHITE}
             >
               <Image source={require('../assets/backArrow.png')} />

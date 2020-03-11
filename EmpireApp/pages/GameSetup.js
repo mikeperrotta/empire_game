@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, TouchableHighlight } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
+import * as Analytics from '../core/Analytics';
 import { Colors } from '../core/styles/Colors';
 import QUESTIONS from '../assets/Questions';
 
@@ -122,8 +123,17 @@ export class GameSetup extends Component {
   selectedQuestionIndex = 0;
 
   navigate = (toScreen) => {
+    Analytics.logEvent(Analytics.events.PAGE_CHANGE,
+      {"fromPage": "GameSetupScreen", "toPage": toScreen});
     const { navigation } = this.props;
     navigation.navigate(toScreen);
+  }
+
+  goBack = () => {
+    Analytics.logEvent(Analytics.events.PAGE_BACK,
+      {"fromPage": "GameSetupScreen"});
+    const { navigation } = this.props;
+    navigation.goBack();
   }
 
   onViewableItemsChanged = ({ viewableItems, changed }) => {
@@ -151,7 +161,7 @@ export class GameSetup extends Component {
         <View>
           <View style={styles.headerContainer}>
             <TouchableHighlight
-                onPress={() => navigation.goBack()}
+                onPress={() => this.goBack()}
                 underlayColor={Colors.WHITE}
             >
               <Image source={require('../assets/backArrow.png')} />

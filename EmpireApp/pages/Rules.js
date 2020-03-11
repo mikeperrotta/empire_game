@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, ScrollView, View, Text, TouchableHighlight, Image } from 'react-native';
 
+import * as Analytics from '../core/Analytics';
 import { Colors } from '../core/styles/Colors';
 
 const styles = StyleSheet.create({
@@ -34,8 +35,17 @@ const rulesText = "In Empire, players will answer a group question and will have
 
 export class Rules extends Component {
   navigate = (toScreen) => {
+    Analytics.logEvent(Analytics.events.PAGE_CHANGE,
+      {"fromPage": "RulesScreen", "toPage": toScreen});
     const { navigation } = this.props;
     navigation.navigate(toScreen)
+  }
+
+  goBack = () => {
+    Analytics.logEvent(Analytics.events.PAGE_BACK,
+      {"fromPage": "RulesScreen"});
+    const { navigation } = this.props;
+    navigation.goBack();
   }
 
   render() {
@@ -43,7 +53,7 @@ export class Rules extends Component {
       <View style={styles.container}>
         <View style={styles.headerContainer}>
           <TouchableHighlight
-              onPress={() => this.props.navigation.goBack()}
+              onPress={() => this.goBack()}
               underlayColor={Colors.WHITE}
           >
             <Image source={require('../assets/backArrow.png')} />

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Modal, StyleSheet, View, Text, TouchableHighlight, Image, ScrollView } from 'react-native';
 import FuzzySet from 'fuzzyset.js';
 
+import * as Analytics from '../core/Analytics';
 import KeyboardShift from '../core/KeyboardShift';
 import QUESTIONS from '../assets/Questions';
 import { Colors } from '../core/styles/Colors';
@@ -188,6 +189,8 @@ export class Game extends Component {
   }
 
   navigate = (toScreen) => {
+    Analytics.logEvent(Analytics.events.PAGE_CHANGE,
+      {"fromPage": "GameScreen", "toPage": toScreen});
     const { navigation } = this.props;
     navigation.navigate(toScreen)
   }
