@@ -262,7 +262,7 @@ export class AnswerSubmission extends Component {
     }
     let previousDuplicate = this.checkIsPreviousDuplicate(currentAnswer);
     if (previousDuplicate) {
-      Analytics.logEvent(Analytics.events.DETECTED_DUPLICATE,
+      Analytics.logEvent(Analytics.events.DETECTED_PREVIOUS_DUPLICATE,
         {
           "submittedAnswer": currentAnswer,
           "previousDuplicate": previousDuplicate,
