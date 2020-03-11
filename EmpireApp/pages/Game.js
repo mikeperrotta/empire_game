@@ -129,8 +129,19 @@ export class Game extends Component {
   constructor (props) {
     super(props)
     global.answers.forEach((answer) => this.fuzzyset.add(answer));
-    global.answers = global.answers.concat(this.getFakeAnswers());
+    let fakeAnswers = this.getFakeAnswers();
+    let submittedAnswers = global.answers;
+    global.answers = global.answers.concat(fakeAnswers);
     shuffle(global.answers);
+    Analytics.logEvent(Analytics.events.START_GAME,
+      {
+        "question": QUESTIONS[global.questionIndex],
+        "numPlayers": global.numberPlayers,
+        "submittedAnswers": submittedAnswers,
+        "numFakes": global.numberFakes,
+        "fakeAnswers": fakeAnswers,
+        "fullOrderedListOfAnswers": global.answers,
+      });
   }
 
   fuzzyset = FuzzySet({useLevenshtein: false});
