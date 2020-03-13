@@ -49,7 +49,7 @@ export class Home extends Component {
   render() {
     return (
       <ImageBackground
-          source={require('../assets/homepageBackground.png')}
+          source={require('../assets/splash_1.jpg')}
           style={styles.backgroundImage}
       >
         <View style={styles.container}>

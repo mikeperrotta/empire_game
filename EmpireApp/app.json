@@ -13,7 +13,7 @@
     "icon": "./assets/icon.png",
     "description": "A fun party game for any group",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash_1.jpg",
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
