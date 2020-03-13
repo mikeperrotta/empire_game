@@ -7,7 +7,7 @@ import KeyboardShift from '../core/KeyboardShift';
 import QUESTIONS from '../assets/Questions';
 import { Colors } from '../core/styles/Colors';
 
-const fuzzyThreshold = 0.675;
+const fuzzyThreshold = 0.8;
 
 const styles = StyleSheet.create({
   container: {
