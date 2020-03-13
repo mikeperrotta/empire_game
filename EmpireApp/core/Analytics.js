@@ -26,7 +26,8 @@ export function initialize(): void {
   if (isInitialized) {
     return;
   }
-  Amplitude.initialize(Secrets.AMPLITUDE_API);
+  Amplitude.initialize(__DEV__ ? 
+    Secrets.AMPLITUDE_DEV_API : Secrets.AMPLITUDE_API);
   isInitialized = true;
 }
 
