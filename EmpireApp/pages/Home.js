@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
     margin: 60,
   },
   logoImage: {
-    height: 216,
-    width: 216,
+    height: 280,
+    width: 280,
   },
   text: {
     color: Colors.WHITE_TEXT,
@@ -54,7 +54,7 @@ export class Home extends Component {
       >
         <View style={styles.container}>
           <Image
-              source={require('../assets/logo2x.png')}
+              source={require('../assets/logo_with_blur2x.png')}
               style={styles.logoImage}
           />
           <View style={styles.buttonContainer}>
