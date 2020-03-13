@@ -27,6 +27,9 @@
       "supportsTablet": false,
   		"bundleIdentifier": "com.mikeperrotta.empire",
       "buildNumber": "6"
+      "config": {
+        "usesNonExemptEncryption": false
+      }
     },
 		"android": {
 			"package": "com.mikeperrotta.empire",
