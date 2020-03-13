@@ -255,7 +255,9 @@ export class AnswerSubmission extends Component {
       Analytics.logEvent(Analytics.events.DETECTED_DUPLICATE,
         {
           "submittedAnswer": currentAnswer,
-          "duplicate": duplicate,
+          "duplicate": duplicate[0][1],
+          "fuzzyScore": duplicate[0][0],
+          "numberDuplicates": duplicate.length,
         });
       this.duplicateEntered(duplicate[0][1]);
       return;
