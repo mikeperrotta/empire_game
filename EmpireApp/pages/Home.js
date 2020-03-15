@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, Image, ImageBackground, Button, TouchableHighlight } from 'react-native';
 
 import * as Analytics from '../core/Analytics';
+import * as Font from 'expo-font';
 import { Colors } from '../core/styles/Colors';
 
 const styles = StyleSheet.create({
@@ -11,34 +12,41 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: 'center',
-    backgroundColor: Colors.BOLD_BLUE,
-    borderRadius: 5,
+    backgroundColor: Colors.VERY_LIGHT_BLUE_TRANSPARENT,
+    borderColor: Colors.BOLD_BLUE,
+    borderRadius: 9,
+    borderWidth: 3,
+    display: 'flex',
     height: 48,
+    justifyContent: 'center',
     margin: 20,
-    padding: 10,
     width: 148,
   },
   buttonContainer: {
-    margin: 30,
   },
   container: {
     alignItems: 'center',
+    display: 'flex',
     flex: 1,
     justifyContent: 'space-between',
-    margin: 60,
+    marginVertical: 60,
   },
   logoImage: {
-    height: 280,
-    width: 280,
+    height: 230,
+    width: 230,
   },
   text: {
-    color: Colors.WHITE_TEXT,
-    fontFamily: 'HelveticaNeue',
-    fontSize: 20,
+    color: Colors.BOLD_BLUE,
+    fontFamily: 'Herculanum',
+    fontSize: 28,
   },
 });
 
 export class Home extends Component {
+  state = {
+    fontLoaded: false,
+  };
+
   navigate = (toScreen) => {
     Analytics.logEvent(Analytics.events.PAGE_CHANGE,
       {"fromPage": "HomeScreen", "toPage": toScreen});
@@ -46,7 +54,16 @@ export class Home extends Component {
     navigation.navigate(toScreen)
   }
 
+  async componentDidMount() {
+    await Font.loadAsync({
+      'Herculanum': require('../assets/fonts/Herculanum.ttf'),
+    });
+
+    this.setState({ fontLoaded: true });
+  }
+
   render() {
+    if (!this.state.fontLoaded) {return null;}
     return (
       <ImageBackground
           source={require('../assets/splash_1.jpg')}
@@ -54,7 +71,7 @@ export class Home extends Component {
       >
         <View style={styles.container}>
           <Image
-              source={require('../assets/logo_with_blur2x.png')}
+              source={require('../assets/homescreen_logo2x.png')}
               style={styles.logoImage}
           />
           <View style={styles.buttonContainer}>
@@ -62,7 +79,7 @@ export class Home extends Component {
                 activeOpacity={1}
                 onPress={() => this.navigate('NumberPlayersScreen')}
                 style={styles.button}
-                underlayColor={Colors.DARK_BLUE}
+                underlayColor={Colors.WHITE}
             >
               <Text style={styles.text}> Play </Text>
             </TouchableHighlight>
@@ -70,7 +87,7 @@ export class Home extends Component {
                 activeOpacity={1}
                 onPress={() => this.navigate('RulesScreen')}
                 style={styles.button}
-                underlayColor={Colors.DARK_BLUE}
+                underlayColor={Colors.WHITE}
             >
               <Text style={styles.text}> Rules </Text>
             </TouchableHighlight>
