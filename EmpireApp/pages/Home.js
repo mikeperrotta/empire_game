@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { SplashScreen } from 'expo';
 import { StyleSheet, View, Text, Image, ImageBackground, Button, TouchableHighlight } from 'react-native';
+import { Asset } from 'expo-asset';
 
 import * as Analytics from '../core/Analytics';
 import * as Font from 'expo-font';
@@ -44,7 +46,7 @@ const styles = StyleSheet.create({
 
 export class Home extends Component {
   state = {
-    fontLoaded: false,
+    areResourcesReady: false,
   };
 
   navigate = (toScreen) => {
@@ -54,20 +56,30 @@ export class Home extends Component {
     navigation.navigate(toScreen)
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.cacheResourcesAsync() // ask for resources
+      .then(() => this.setState({ areResourcesReady: true })) // mark resources as loaded
+      .catch(error => console.error(`Unexpected error thrown when loading:
+        ${error.stack}`));
+  }
+
+  async cacheResourcesAsync() {
     await Font.loadAsync({
       'Herculanum': require('../assets/fonts/Herculanum.ttf'),
     });
-
-    this.setState({ fontLoaded: true });
+    const images = [require('../assets/homescreen_logo2x.png')];
+    const cacheImages = images.map(image => Asset.fromModule(image).downloadAsync());
+    return Promise.all(cacheImages);
   }
 
   render() {
-    if (!this.state.fontLoaded) {return null;}
+    if (!this.state.areResourcesReady) {return null;}
     return (
       <ImageBackground
           source={require('../assets/splash_1.jpg')}
           style={styles.backgroundImage}
+          onLoadEnd={() => {SplashScreen.hide()}}
+          fadeDuration={0}
       >
         <View style={styles.container}>
           <Image

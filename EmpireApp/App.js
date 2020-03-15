@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { SplashScreen } from 'expo';
 import { StackNavigator } from 'react-navigation';
 import { StatusBar } from 'react-native';
 
@@ -34,6 +35,7 @@ export default class App extends Component {
   constructor (props) {
     Analytics.logEvent(Analytics.events.APP_START);
     super(props);
+    SplashScreen.preventAutoHide();
   }
 
   render() {
