@@ -13,9 +13,9 @@
     "icon": "./assets/icon.png",
     "description": "A fun party game for any group",
     "splash": {
-      "image": "./assets/splash_1.jpg",
-      "resizeMode": "cover",
-      "backgroundColor": "#ffffff"
+      "image": "./assets/white_logo3x.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#007FEB"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
